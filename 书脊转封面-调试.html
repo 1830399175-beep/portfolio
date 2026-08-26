@@ -1666,6 +1666,30 @@
     0% { transform: rotateX(180deg); z-index: 1; }
     100% { transform: rotateX(0deg); z-index: 4; }
   }
+
+  /* ===== 整页加载遮罩：该页图片/字体未全部加载完成前，内容不可见 ===== */
+  #page-loader {
+    position: fixed; inset: 0; z-index: 99999;
+    background: #ffffff;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px;
+    transition: opacity .5s ease, visibility .5s ease;
+  }
+  #page-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+  .loader-spinner {
+    width: 46px; height: 46px;
+    border: 4px solid rgba(0,0,0,.10);
+    border-top-color: #3d5a45;
+    border-radius: 50%;
+    animation: loader-spin .85s linear infinite;
+  }
+  .loader-text {
+    font-family: 'Noto Serif SC', 'Songti SC', serif;
+    font-size: 14px; letter-spacing: .2em;
+    color: #8a8a80;
+  }
+  @keyframes loader-spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <<body>
@@ -3861,6 +3885,91 @@ function backToPixel() {
   document.addEventListener('click', function () {
     panel.classList.remove('show');
   });
+})();
+</script>
+
+<!-- 整页加载遮罩：转圈直到该页图片/字体全部加载完成才淡出显示内容 -->
+<div id="page-loader"><div class="loader-spinner"></div><div class="loader-text">加载中…</div></div>
+<script>
+/* ============ 加载遮罩逻辑 ============
+   信封页：等信封图片 + 信封纸纹/上盖背景图 + 字体全部就绪 → 淡出遮罩显示信封。
+   书架页：首次翻过去时若书架图片还没加载完，遮罩重新盖住，直到就绪再显示。 */
+(function () {
+  var loader = document.getElementById('page-loader');
+  if (!loader) return;
+
+  var MIN_MS = 450; /* 最短展示时长，避免一闪而过 */
+  var minShown = new Promise(function (r) { setTimeout(r, MIN_MS); });
+  var LOAD_CAP = 12000; /* 兜底超时：Google 外链字体在国内可能卡住，超时也放行，绝不白屏 */
+  function withTimeout(p) {
+    return Promise.race([p, new Promise(function (r) { setTimeout(r, LOAD_CAP); })]);
+  }
+
+  function one(el) {
+    if (el.complete) return Promise.resolve();
+    return new Promise(function (res) {
+      el.addEventListener('load', res, { once: true });
+      el.addEventListener('error', res, { once: true }); /* 加载失败也算就绪，不卡死 */
+    });
+  }
+  function imgsReady(sel) {
+    var imgs = Array.prototype.slice.call(document.querySelectorAll(sel + ' img'));
+    return Promise.all(imgs.map(one));
+  }
+  function bgReady(urls) {
+    return Promise.all(urls.map(function (u) {
+      var im = new Image();
+      im.src = u;
+      return im.complete ? Promise.resolve()
+        : new Promise(function (res) { im.onload = im.onerror = res; });
+    }));
+  }
+  function fontsReady() {
+    return (document.fonts && document.fonts.ready) || Promise.resolve();
+  }
+
+  /* 信封页在 CSS 里用的背景图（<img> 之外的），需单独预载 */
+  var ENV_BG = [
+    '自扫自用纸纹分享_3_嶋柿老八_来自小红书网页版.jpg',
+    '抠图结果/上盖.png',
+    '抠图结果/auto3_cut_crop.png'
+  ];
+
+  function hideLoader() { loader.classList.add('hidden'); }
+
+  /* 初始进入：信封页全部就绪才显示（带兜底超时） */
+  withTimeout(Promise.all([imgsReady('#envelope-overlay'), bgReady(ENV_BG), fontsReady(), minShown]))
+    .then(hideLoader);
+
+  /* 书架页图片是否已全部加载完成（读信期间后台并行下载，通常已就绪） */
+  function bookImgsDone() {
+    var imgs = document.querySelectorAll('.page-face.back img');
+    for (var i = 0; i < imgs.length; i++) {
+      if (!imgs[i].complete) return false;
+    }
+    return true;
+  }
+  var bookCache = null;
+  function bookshelfReady() {
+    if (!bookCache) bookCache = Promise.all([imgsReady('.page-face.back'), fontsReady()]);
+    return bookCache;
+  }
+
+  /* 首次翻到书架页：未就绪就重新盖住转圈，直到全部加载完 */
+  var shelfOnce = false;
+  var origClose = window.closeEnvelope;
+  if (typeof origClose === 'function') {
+    window.closeEnvelope = function (e) {
+      if (!shelfOnce) {
+        shelfOnce = true;
+        if (!bookImgsDone()) {
+          loader.classList.remove('hidden');
+          withTimeout(Promise.all([bookshelfReady(), minShown])).then(hideLoader);
+        }
+      }
+      return origClose(e);
+    };
+  }
 })();
 </script>
 

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head><meta charset="UTF-8">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     /* 本机字体：迫真打字油印体（油印/打字机印刷质感） */
@@ -60,6 +57,29 @@
         min-height: 100vh;
         padding: 18px;
     }
+    /* ===== 整页加载遮罩：背景图与字体加载完前，内容不可见 ===== */
+    #page-loader {
+        position: fixed; inset: 0; z-index: 999999;
+        background: #ffffff;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 18px;
+        transition: opacity .5s ease, visibility .5s ease;
+    }
+    #page-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-spinner {
+        width: 52px; height: 52px;
+        border: 4px solid rgba(0,0,0,.10);
+        border-top-color: #3d5a45;
+        border-radius: 50%;
+        animation: loader-spin .85s linear infinite;
+    }
+    .loader-text {
+        font-family: 'PaiZhenTypewriter', 'Courier New', monospace;
+        font-size: 16px; letter-spacing: .3em;
+        color: #8a8a80;
+    }
+    @keyframes loader-spin { to { transform: rotate(360deg); } }
     .paper {
         position: relative;
         overflow: hidden;           /* 让纸纹不冒出圆角 */
@@ -4073,6 +4093,36 @@
     // 信封页内「‹」返回像素页：iframe 里发来 postMessage，执行反漩涡
     window.addEventListener('message', function (e) {
         if (e.data && e.data.type === 'pixel-portrait-back') restore();
+    });
+})();
+</script>
+
+<!-- 整页加载遮罩：背景图与字体全部加载完成前，内容不可见 -->
+<div id="page-loader"><div class="loader-spinner"></div><div class="loader-text">加载中…</div></div>
+<script>
+/* ============ 加载遮罩逻辑：等本页背景纸纹 + 字体就绪 → 淡出显示 ============
+   注：内嵌的信封/书架 iframe 独立加载、自带自己的遮罩，这里不等它。 */
+(function () {
+    var loader = document.getElementById('page-loader');
+    if (!loader) return;
+
+    var MIN_MS = 450; /* 最短展示时长，避免一闪而过 */
+    var minShown = new Promise(function (r) { setTimeout(r, MIN_MS); });
+    var LOAD_CAP = 12000; /* 兜底超时：网络极端慢时超时也放行，绝不白屏卡死 */
+    function withTimeout(p) {
+        return Promise.race([p, new Promise(function (r) { setTimeout(r, LOAD_CAP); })]);
+    }
+
+    /* 页面主背景纸纹图（CSS background-image，不在 <img> 里），预载后即显示 */
+    var bg = new Image();
+    bg.src = '微信图片_20260824214502.jpg';
+    var bgReady = bg.complete ? Promise.resolve()
+        : new Promise(function (r) { bg.onload = bg.onerror = r; });
+
+    var fonts = (document.fonts && document.fonts.ready) || Promise.resolve();
+
+    withTimeout(Promise.all([bgReady, fonts, minShown])).then(function () {
+        loader.classList.add('hidden');
     });
 })();
 </script>
