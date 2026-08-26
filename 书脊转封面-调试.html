@@ -830,7 +830,7 @@
     min-height: 100vh;
     background: #ffffff;
     display: flex; flex-direction: column;
-    align-items: center; justify-content: flex-start;
+    align-items: center; justify-content: center;
     padding: 0 20px 60px;
     font-family: 'Noto Serif SC', 'Songti SC', 'STSong', system-ui, -apple-system, sans-serif;
     transition: opacity .55s ease, visibility .55s ease;
@@ -1570,6 +1570,13 @@
   .page-face.back { transform: rotateY(180deg); }
   /* 前后页整页等比缩放 85%（返回按钮除外）：用 zoom 模拟浏览器页面缩放 */
   .page-zoom { zoom: 0.85; }
+  /* 书架页内容垂直居中：内容矮于视口时居中，高于时自然滚动不裁切 */
+  .page-face.back .page-zoom {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
   #pagebook.flipped { transform: rotateY(180deg); }
   /* 后页左上角"返回信封" */
   /* 纯图标翻页箭头：无背景框，左右边，定位到整页内容高度的正中心（top 由 JS 按 scrollHeight 计算） */
