@@ -1,0 +1,6 @@
+# 依赖（PDF导出说明 用 puppeteer-core，node_modules 不需要入库）
+node_modules/
+
+# 系统缩略图缓存
+Thumbs.db
+.DS_Store

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小红书穿搭账号 · 媒体包 / Media Kit</title>
+<meta name="description" content="小红书穿搭类账号运营作品集（Media Kit）。从 0 起号、0 成本增粉 3000+，获赞与收藏 4.5 万，爆文率 33.2%。">
+
+<!-- ============ 字体 ============ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   小红书穿搭账号 · 媒体包 / Media Kit
+   设计语言：Editorial Warm Minimalism（杂志暖调极简）
+   签名元素：「小红书笔记卡」视觉系统 + 爆文率圆环
+   配色：暖调燕麦纸 + 深炭灰 + 低饱和深绿 / 暖棕 / 裸粉
+   ============================================================ */
+
+:root{
+  --paper:      #F9F8F6;
+  --paper-2:    #F2EFE8;
+  --paper-3:    #EAE5DA;
+  --ink:        #1C1C1C;
+  --ink-soft:   #4E4A44;
+  --ink-faint:  #948C80;
+  --line:       #E7E1D6;
+  --line-strong:#D6CFC0;
+
+  --green:      #46523F;
+  --green-deep: #333D2E;
+  --brown:      #A0815F;
+  --brown-deep: #84684A;
+  --nude:       #E3C8BC;
+  --nude-soft:  #EBDAD2;
+
+  --serif:  "Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:   "Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --latin:  "Cormorant Garamond","Georgia",serif;
+  --body:   "Inter","Noto Sans SC","PingFang SC",sans-serif;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --gutter: clamp(20px, 5.5vw, 80px);
+  --maxw: 1240px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-weight:300;line-height:1.85;letter-spacing:.01em;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+img,svg{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+::selection{background:var(--green);color:#F9F8F6;}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:2px;}
+
+/* 滚动进度条 */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:200;
+  background:linear-gradient(90deg,var(--green),var(--brown));}
+
+/* ============ 通用 ============ */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
+.section{padding:clamp(84px,13vh,150px) 0;}
+.eyebrow{display:flex;align-items:center;gap:14px;font-family:var(--latin);font-style:italic;font-size:15px;color:var(--ink-faint);letter-spacing:.12em;}
+.eyebrow::before{content:"";width:38px;height:1px;background:var(--green);}
+.section-title{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.8vw,54px);line-height:1.25;letter-spacing:.02em;margin-top:20px;}
+.section-title em{font-style:normal;color:var(--green);}
+.lead{color:var(--ink-soft);font-size:clamp(15px,1.7vw,18px);line-height:2.05;max-width:58ch;margin-top:20px;}
+
+/* 显现 */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity 1.05s var(--ease), transform 1.05s var(--ease);}
+.reveal.is-visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ============ 背景点阵纹理（致敬穿搭的织物感） ============ */
+.dots{position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(var(--line-strong) 1px, transparent 1px);
+  background-size:26px 26px;opacity:.5;
+  -webkit-mask-image:radial-gradient(60% 60% at 50% 40%, #000 0%, transparent 70%);
+          mask-image:radial-gradient(60% 60% at 50% 40%, #000 0%, transparent 70%);
+}
+
+/* ============ Hero ============ */
+.hero{
+  position:relative;min-height:100vh;
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  align-items:center;gap:clamp(40px,6vw,90px);
+  padding:clamp(96px,13vh,150px) var(--gutter) clamp(90px,12vh,130px);
+  overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(46% 40% at 82% 24%, rgba(70,82,63,.10), transparent 70%),
+    radial-gradient(42% 38% at 12% 84%, rgba(160,129,95,.10), transparent 70%);
+}
+.hero-inner{position:relative;z-index:2;}
+.hero-eyebrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:12.5px;letter-spacing:.2em;color:var(--ink-soft);opacity:0;animation:rise .9s var(--ease) .05s forwards;}
+.hero-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex:none;}
+.hero-eyebrow .sep{color:var(--ink-faint);letter-spacing:.2em;font-family:var(--latin);font-style:italic;}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(30px,4.8vw,64px);line-height:1.3;letter-spacing:.02em;margin-top:34px;opacity:0;animation:rise 1.05s var(--ease) .2s forwards;}
+.hero h1 .xhs-inline{display:inline-block;width:.92em;height:.92em;vertical-align:-0.13em;margin-right:.06em;}
+.hero h1 .xhs-inline svg{width:100%;height:100%;display:block;}
+.hero .latin-tag{font-family:var(--latin);font-style:italic;font-size:clamp(13px,1.7vw,17px);color:var(--brown);letter-spacing:.16em;margin-top:16px;opacity:0;animation:rise 1.05s var(--ease) .35s forwards;}
+.hero .statement{font-family:var(--serif);font-weight:300;font-size:clamp(19px,2.9vw,30px);line-height:1.62;margin-top:38px;max-width:21em;opacity:0;animation:rise 1.05s var(--ease) .5s forwards;}
+.hero .statement b{font-weight:600;}
+.hero .sub{color:var(--ink-soft);font-size:clamp(14px,1.6vw,16px);line-height:2.1;margin-top:22px;max-width:46ch;opacity:0;animation:rise 1.05s var(--ease) .62s forwards;}
+.hero-meta{display:flex;gap:30px;margin-top:34px;flex-wrap:wrap;opacity:0;animation:rise 1.05s var(--ease) .74s forwards;}
+.hero-meta .hm{font-size:12px;letter-spacing:.08em;color:var(--ink-faint);}
+.hero-meta .hm b{display:block;font-family:var(--latin);font-style:italic;font-weight:500;font-size:21px;color:var(--ink);letter-spacing:.02em;margin-top:2px;}
+
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+
+/* 小红书笔记卡（签名元素） */
+.hero-stage{position:relative;z-index:2;display:flex;justify-content:center;opacity:0;animation:rise 1.2s var(--ease) .55s forwards;}
+.tilt{perspective:1200px;}
+.tilt-inner{transform-style:preserve-3d;transition:transform .18s ease-out;will-change:transform;}
+.note-card{
+  width:clamp(240px,24vw,330px);background:#fff;border-radius:18px;overflow:hidden;
+  border:1px solid var(--line);box-shadow:0 40px 90px -36px rgba(28,28,28,.42);
+  transition:box-shadow .6s var(--ease);
+}
+.note-card:hover{box-shadow:0 54px 110px -36px rgba(28,28,28,.52);}
+.nc-cover{position:relative;aspect-ratio:3/4;overflow:hidden;
+  background:linear-gradient(152deg,#E9D6C6 0%,#D3B394 48%,#A98B6B 100%);}
+.nc-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.nc-cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 80% 110%, rgba(70,82,63,.28), transparent 55%),
+             radial-gradient(70% 60% at 18% 6%, rgba(255,255,255,.35), transparent 60%);}
+.nc-cover .nc-word{position:absolute;left:20px;bottom:14px;font-family:var(--latin);font-style:italic;font-weight:500;font-size:clamp(30px,3.4vw,42px);color:rgba(255,255,255,.92);letter-spacing:.04em;line-height:1;text-shadow:0 1px 14px rgba(28,28,28,.45),0 0 3px rgba(28,28,28,.35);}
+.nc-cover .nc-no{position:absolute;top:16px;right:18px;font-family:var(--latin);font-style:italic;font-size:13px;color:rgba(255,255,255,.75);letter-spacing:.2em;}
+.nc-cover .nc-chip{position:absolute;top:16px;left:16px;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:rgba(255,255,255,.82);border-radius:99px;backdrop-filter:blur(4px);box-shadow:0 6px 16px -8px rgba(28,28,28,.35);}
+.nc-cover .nc-chip svg{width:20px;height:20px;display:block;}
+.nc-body{padding:18px 20px 20px;}
+.nc-body h4{font-family:var(--serif);font-weight:600;font-size:17px;line-height:1.45;letter-spacing:.01em;}
+.nc-body .nc-tag{display:inline-block;margin-top:10px;font-size:11px;letter-spacing:.1em;color:var(--green);border:1px solid var(--line);border-radius:99px;padding:4px 12px;}
+.nc-foot{display:flex;align-items:center;gap:18px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft);}
+.nc-foot .nf{display:flex;align-items:center;gap:6px;}
+.nc-foot .nf svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;}
+.nc-foot .nf.like{color:var(--brown-deep);}
+.nc-foot .nf.save{color:var(--green);}
+.phone-tag{position:absolute;left:-34px;bottom:38px;transform:rotate(-90deg);transform-origin:left center;font-family:var(--latin);font-style:italic;font-size:11.5px;letter-spacing:.26em;color:var(--ink-faint);white-space:nowrap;}
+
+/* ============ 滚动字幕 ============ */
+/* ============ 定位与基调 ============ */
+.position{position:relative;}
+.position .dots{opacity:.35;}
+.pos-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(40px,7vw,100px);align-items:center;position:relative;z-index:2;}
+.pos-title{font-family:var(--serif);font-weight:300;font-size:clamp(26px,3.4vw,42px);line-height:1.55;margin-top:22px;letter-spacing:.01em;}
+.pos-title em{font-style:normal;font-weight:600;}
+.pos-body{color:var(--ink-soft);font-size:15px;line-height:2.1;margin-top:22px;max-width:54ch;}
+.pos-tags{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:34px;}
+.tcloud{display:inline-flex;align-items:center;gap:.4em;font-family:var(--serif);color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:.5em .95em;background:rgba(255,255,255,.5);cursor:default;transition:transform .45s var(--ease), box-shadow .45s var(--ease), background .45s var(--ease), color .45s var(--ease), border-color .45s var(--ease);}
+.tcloud .en{font-family:var(--latin);font-style:italic;font-weight:400;color:var(--ink-faint);letter-spacing:.1em;}
+.tcloud:hover{color:var(--green);border-color:var(--green);background:#fff;transform:translateY(-3px);box-shadow:0 14px 30px -16px rgba(70,82,63,.4);}
+.tcloud:hover .en{color:var(--brown);}
+.tcloud.t1{font-weight:600;font-size:clamp(20px,2.2vw,26px);}
+.tcloud.t1 .en{font-size:10px;}
+.tcloud.t2{font-weight:500;font-size:clamp(17px,1.8vw,21px);}
+.tcloud.t2 .en{font-size:9px;}
+.tcloud.t3{font-weight:400;font-size:clamp(14px,1.5vw,18px);}
+.tcloud.t3 .en{font-size:8px;}
+.tcloud.t4{font-weight:400;font-size:clamp(12px,1.3vw,15px);}
+.tcloud.t4 .en{font-size:8px;}
+
+/* 引用块 */
+.quote{position:relative;margin-top:0;padding-left:clamp(24px,3vw,40px);border-left:1px solid var(--line-strong);}
+.quote-mark{font-family:var(--latin);font-size:clamp(100px,11vw,150px);line-height:.5;color:var(--nude);user-select:none;}
+.quote-text{font-family:var(--serif);font-weight:300;font-size:clamp(19px,2.3vw,27px);line-height:1.5;letter-spacing:.02em;margin-top:12px;white-space:nowrap;}
+.quote-text b{font-weight:600;}
+.quote-src{display:flex;align-items:center;gap:14px;margin-top:26px;font-size:13px;color:var(--ink-faint);letter-spacing:.06em;}
+.quote-src::before{content:"";width:30px;height:1px;background:var(--brown);}
+
+/* ============ 数据 ============ */
+.metrics{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+.metrics::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(50% 55% at 20% 10%, rgba(70,82,63,.07), transparent 65%);}
+.metrics .wrap{position:relative;z-index:2;}
+.met-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr) minmax(0,.6fr);gap:clamp(28px,4.5vw,60px);align-items:center;margin-top:clamp(40px,6vw,70px);}
+
+/* 圆环 */
+.ring-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(20px,4vw,40px);}
+.ring{position:relative;width:min(300px,72vw);}
+.ring svg{width:100%;height:auto;transform:rotate(-90deg);}
+.ring .track{fill:none;stroke:var(--line-strong);stroke-width:2.5;}
+.ring .arc{fill:none;stroke:var(--green);stroke-width:3;stroke-linecap:round;}
+.ring .dashed{fill:none;stroke:var(--brown);stroke-width:1;stroke-dasharray:2 7;}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ring-center .num{font-family:var(--latin);font-weight:500;font-size:clamp(52px,7vw,76px);line-height:1;letter-spacing:.01em;color:var(--ink);}
+.ring-center .num sup{font-size:.5em;font-weight:400;color:var(--green);}
+.ring-center .lab{font-family:var(--serif);font-weight:400;font-size:15px;letter-spacing:.32em;color:var(--ink-soft);margin-top:12px;text-indent:.32em;}
+.ring-note{margin-top:28px;font-size:13.5px;line-height:1.9;color:var(--ink-faint);max-width:17em;}
+
+/* 数据网格 */
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+.stat{padding:clamp(26px,3.6vw,44px) clamp(16px,2.6vw,32px);border-bottom:1px solid var(--line);position:relative;}
+.stat:nth-child(odd){border-right:1px solid var(--line);}
+.stat .s-label{font-size:12px;letter-spacing:.14em;color:var(--ink-faint);}
+.stat .s-num{font-family:var(--latin);font-weight:500;font-size:clamp(44px,6vw,72px);line-height:1.05;letter-spacing:.01em;color:var(--ink);margin-top:10px;}
+.stat .s-num .unit{font-family:var(--serif);font-weight:400;font-size:.36em;color:var(--green);margin-left:4px;letter-spacing:.06em;}
+.stat .s-sub{margin-top:8px;font-size:12.5px;color:var(--ink-soft);letter-spacing:.04em;}
+.stat .s-sub em{font-style:normal;color:var(--brown-deep);}
+.stat .corner{position:absolute;top:18px;right:18px;font-family:var(--latin);font-style:italic;font-size:13px;color:var(--ink-faint);letter-spacing:.1em;opacity:0;transition:opacity .4s var(--ease);}
+.stat:hover .corner{opacity:1;}
+.met-shot{text-align:center;}
+.met-shot img{width:100%;max-width:210px;margin:0 auto;border:1px solid var(--line);border-radius:14px;box-shadow:0 34px 64px -34px rgba(28,28,28,.4);}
+.met-shot-cap{display:block;margin-top:13px;font-family:var(--latin);font-style:italic;font-size:12px;color:var(--ink-faint);letter-spacing:.1em;}
+.met-foot{margin-top:clamp(24px,3.5vw,40px);display:flex;align-items:center;gap:clamp(16px,3vw,32px);flex-wrap:wrap;padding:clamp(20px,2.8vw,28px) clamp(20px,2.8vw,30px);border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.55);}
+.met-foot .mf-label{font-size:12px;letter-spacing:.14em;color:var(--ink-faint);}
+.met-foot .mf-num{font-family:var(--latin);font-weight:500;font-size:clamp(30px,3.6vw,44px);line-height:1;color:var(--green);}
+.met-foot .mf-sub{font-size:13px;color:var(--ink-soft);letter-spacing:.04em;}
+
+/* 纯图片画廊 */
+.shot{border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 34px 70px -34px rgba(28,28,28,.4);background:#fff;transition:transform .65s var(--ease), box-shadow .65s var(--ease);}
+.shot:hover{transform:translateY(-6px);box-shadow:0 52px 92px -40px rgba(28,28,28,.5);}
+.shot img{width:100%;height:auto;display:block;}
+
+/* ============ 精选画廊 ============ */
+.gal-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;}
+.gal-head .lead{margin-top:0;max-width:44ch;}
+.gal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2.2vw,30px);margin-top:clamp(44px,6vw,70px);}
+
+/* 画廊：纯图片展示 */
+.shot img{transition:transform .8s var(--ease);}
+.shot:hover img{transform:scale(1.03);}
+
+/* ============ 合作 / 联系 ============ */
+.contact{position:relative;overflow:hidden;}
+.contact .dots{opacity:.3;}
+.contact-inner{position:relative;z-index:2;text-align:center;max-width:720px;margin:0 auto;}
+.contact-inner .eyebrow{justify-content:center;}
+.contact-inner .eyebrow::before{display:none;}
+.contact-title{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5.6vw,62px);line-height:1.3;margin-top:22px;letter-spacing:.02em;}
+.contact-title em{font-style:normal;font-weight:600;}
+.contact-lead{color:var(--ink-soft);font-size:clamp(14.5px,1.7vw,17px);line-height:2.05;margin-top:24px;max-width:46ch;margin-left:auto;margin-right:auto;}
+.mail{display:inline-flex;align-items:center;gap:14px;margin-top:38px;font-family:var(--latin);font-style:italic;font-weight:500;font-size:clamp(20px,3vw,28px);color:var(--ink);letter-spacing:.02em;border-bottom:1px solid var(--line-strong);padding-bottom:8px;transition:color .35s var(--ease), border-color .35s var(--ease);}
+.mail:hover{color:var(--green);border-color:var(--green);}
+.mail svg{width:22px;height:22px;fill:none;stroke:var(--green);stroke-width:1.5;}
+.socials{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:44px;}
+.social{display:inline-flex;align-items:center;gap:9px;font-size:13px;letter-spacing:.1em;color:var(--ink-soft);
+  border:1px solid var(--line-strong);border-radius:99px;padding:13px 24px;
+  transition:all .45s var(--ease);}
+.social svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;flex:none;}
+.social:hover{background:var(--green);color:#F9F8F6;border-color:var(--green);transform:translateY(-3px);box-shadow:0 18px 36px -18px rgba(70,82,63,.55);}
+
+/* ============ Footer ============ */
+footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;background:var(--paper-2);}
+.foot-inner{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.foot-brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-weight:600;font-size:15px;letter-spacing:.14em;}
+.foot-brand .mark{width:9px;height:9px;background:var(--green);border-radius:50%;flex:none;}
+.foot-brand .en{font-family:var(--latin);font-style:italic;font-weight:400;font-size:11.5px;color:var(--ink-faint);letter-spacing:.18em;}
+.foot-right{font-family:var(--latin);font-style:italic;color:var(--ink-faint);font-size:13px;letter-spacing:.16em;text-align:right;}
+
+/* ============ 响应式 ============ */
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:90px;padding-bottom:70px;gap:54px;}
+  .hero-stage{justify-content:center;}
+  .phone-tag{display:none;}
+  .pos-grid{grid-template-columns:1fr;gap:44px;}
+  .met-grid{grid-template-columns:1fr;gap:44px;}
+  .ring-wrap{padding:0;}
+}
+@media (max-width:560px){
+  .gal-grid{grid-template-columns:1fr;}
+  .stats{grid-template-columns:1fr;}
+  .stat:nth-child(odd){border-right:0;}
+  .hero-meta{gap:22px;}
+  .foot-inner{justify-content:center;text-align:center;}
+  .foot-right{text-align:center;}
+}
+
+/* 减少动效 */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important;scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;}
+  .hero h1,.hero .latin-tag,.hero .statement,.hero .sub,.hero-eyebrow,.hero-meta,.hero-stage{opacity:1;animation:none;}
+}
+
+/* ============================================================
+   打印导出 —— 每个区块 = 一张横向 A4（297×210mm）
+   方案：人生四格项目验证过的「flex 居中 + JS scale()」做法
+   ============================================================ */
+@page{size:A4 landscape;margin:0}
+@media print{
+  html,body{background:#F9F8F6}
+
+  /* ① 屏幕滚动渐显 / 入场动画 → 定格最终态，避免导出停在空白帧 */
+  .reveal,.hero-eyebrow,.hero h1,.hero .latin-tag,.hero .statement,.hero .sub,.hero-meta,.hero-stage{
+    opacity:1 !important;transform:none !important;animation:none !important;transition:none !important;
+  }
+
+  /* ② 非内容元素隐藏：顶部进度条、footer、点阵背景、竖排标签 */
+  .progress,footer,.dots,.phone-tag{display:none !important}
+
+  /* ③ 每个区块 = 一页横向 A4。flex 行方向 + 居中：
+       缩放围绕区块中心进行，内容永远不会被顶到页外 */
+  .hero,.position,.metrics,#gallery,.contact{
+    width:297mm;height:210mm;min-height:0 !important;max-width:none;
+    margin:0;padding:0;box-sizing:border-box;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .position,.metrics,#gallery,.contact{break-before:page}
+
+  /* ④ 打印布局压死：page.pdf() 分页重排会让内部宽度收窄，
+       触发 960px/560px 断点把多列 grid 塌成单列 —— 用 !important 压住 */
+  .hero .print-fit{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr) !important;gap:clamp(24px,4vw,60px);align-items:center;}
+  .print-fit .pos-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr) !important}
+  .print-fit .met-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr) minmax(0,.6fr) !important}
+  .print-fit .gal-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+  .print-fit .stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+
+  /* ⑤ 内容容器：铺满页宽、自带页边距，供 JS transform:scale 缩放。
+        不要在上面压 height / overflow —— 它只是视觉缩放的载体 */
+  .print-fit{
+    width:100%;padding:16mm 14mm;box-sizing:border-box;transform-origin:center center;
+  }
+  /* 屏幕上的限宽容器放开来铺满，否则居中失效 */
+  .print-fit .wrap{max-width:none;margin:0;padding:0;}
+  .print-fit .hero-inner{margin:0 auto;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<main id="top">
+
+  <!-- ============ Hero ============ -->
+  <section class="hero">
+    <div class="dots" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow"><span class="dot"></span>新媒体运营 · 个人作品集<span class="sep">CREATIVE CONTENT &amp; BRAND PORTFOLIO</span></div>
+      <h1><span class="xhs-inline"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="0.5" y="0.5" width="23" height="23" rx="7" fill="#FF2442"/><text x="12" y="16.6" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10.5" font-weight="700" fill="#fff" letter-spacing="0.2">RED</text></svg></span>穿搭种草账号</h1>
+      <div class="latin-tag">LRB&nbsp;&nbsp;·&nbsp;&nbsp;FASHION&nbsp;&nbsp;CREATOR</div>
+      <p class="statement">以穿搭为语言，为潮流 Gen&nbsp;Z，<b>提炼可被收藏的风格灵感。</b></p>
+      <p class="sub">从 0 起号、0 成本，专注「穿搭风格推荐」与「服装店铺推荐」的小红书图文账号运营人。</p>
+      <div class="hero-meta">
+        <div class="hm">增粉<b>3,000+</b></div>
+        <div class="hm">获赞收藏<b>45K</b></div>
+        <div class="hm">爆文率<b>33.2%</b></div>
+        <div class="hm">运营周期<b>2021.06–2022.06</b></div>
+      </div>
+    </div>
+
+    <div class="hero-stage">
+      <div class="tilt" id="tilt">
+        <div class="tilt-inner" id="tiltInner">
+          <div class="note-card">
+            <div class="nc-cover">
+              <img src="图片/笔记示例图.jpg" alt="小红书笔记示例图">
+              <span class="nc-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="0.5" y="0.5" width="23" height="23" rx="7" fill="#FF2442"/><text x="12" y="16.6" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10.5" font-weight="700" fill="#fff" letter-spacing="0.2">RED</text></svg></span>
+              <span class="nc-no">LOOK 01</span>
+              <span class="nc-word">穿搭</span>
+            </div>
+            <div class="nc-body">
+              <h4>春日少女｜奶油系穿搭日记</h4>
+              <span class="nc-tag">穿搭风格推荐</span>
+              <div class="nc-foot">
+                <span class="nf like"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.6-9.2-8.6C1 8.5 2.6 5 5.7 5c1.9 0 3.3 1 4.3 2.5C11 6 12.4 5 14.3 5c3.1 0 4.7 3.5 2.9 6.4C19 15.4 12 20 12 20z"/></svg>3.4K</span>
+                <span class="nf save"><svg viewBox="0 0 24 24"><path d="M5 5a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v15l-7-4-7 4z"/></svg>4.1K</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-tag">— THE NOTE, ELEVATED</div>
+    </div>
+  </section>
+
+  <!-- ============ 定位与基调 ============ -->
+  <section class="section position" id="position">
+    <div class="dots" aria-hidden="true"></div>
+    <div class="wrap pos-grid">
+      <div class="reveal">
+        <div class="eyebrow">定位 · POSITIONING</div>
+        <h2 class="pos-title">穿搭与店铺，<em>双线种草</em>。</h2>
+        <p class="pos-body">账号从 0 搭建、运营近一年，围绕「穿搭风格推荐」与「服装店铺推荐」两条内容主线，面向活跃于网络、追随潮流的 Gen&nbsp;Z 人群。用真实、可复制的图文笔记，把每一次风格灵感沉淀为可持续的种草内容。</p>
+        <div class="pos-tags">
+          <span class="tcloud t1">穿搭风格推荐<span class="en">STYLING</span></span>
+          <span class="tcloud t2">服装店铺推荐<span class="en">STORE PICKS</span></span>
+          <span class="tcloud t3">GENZ 潮流人群<span class="en">GEN Z</span></span>
+          <span class="tcloud t4">图文种草<span class="en">SEEDING</span></span>
+        </div>
+      </div>
+
+      <div class="quote reveal d1">
+        <div class="quote-mark">&ldquo;</div>
+        <p class="quote-text">爆款的本质，<b>是拆解，而非运气。</b></p>
+        <div class="quote-src">追踪平台热点，拆解爆款标题、正文、排版、关键词与话题，让每一次选题都站在流量的潮头。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 数据 ============ -->
+  <section class="section metrics" id="metrics">
+    <div class="wrap">
+      <div class="eyebrow reveal">数据 · IMPACT</div>
+      <h2 class="section-title reveal d1">数字，是最好的<em>作品</em>。</h2>
+
+      <div class="met-grid">
+        <div class="ring-wrap reveal">
+          <div class="ring">
+            <svg viewBox="0 0 200 200">
+              <circle class="track" cx="100" cy="100" r="88"/>
+              <circle class="dashed" cx="100" cy="100" r="72"/>
+              <circle class="arc" id="arc" cx="100" cy="100" r="88"/>
+            </svg>
+            <div class="ring-center">
+              <div class="num"><span id="ringNum">0</span><sup>%</sup></div>
+              <div class="lab">爆文率</div>
+            </div>
+          </div>
+          <p class="ring-note">每 3 篇笔记，就有约 1 篇成为爆款。<br>爆款，是这组数据里最有力的说明。</p>
+        </div>
+
+        <div class="stats reveal d1">
+          <div class="stat">
+            <span class="corner">FOLLOWERS</span>
+            <div class="s-label">粉丝总量 · 0 成本起号</div>
+            <div class="s-num"><span data-count="3000" data-sep="1">0</span><span class="unit">+</span></div>
+            <div class="s-sub">从 0 搭建，<em>近一年</em> 沉淀</div>
+          </div>
+          <div class="stat">
+            <span class="corner">LIKES &amp; SAVES</span>
+            <div class="s-label">获赞与收藏</div>
+            <div class="s-num"><span data-count="45" data-suffix="K">0</span></div>
+            <div class="s-sub">累计 <em>4.5 万</em> 互动</div>
+          </div>
+          <div class="stat">
+            <span class="corner">AVG. LIKES</span>
+            <div class="s-label">篇均互动</div>
+            <div class="s-num"><span data-count="361">0</span></div>
+            <div class="s-sub">平均每篇笔记 <em>361</em> 赞</div>
+          </div>
+          <div class="stat">
+            <span class="corner">NOTES</span>
+            <div class="s-label">内容笔记</div>
+            <div class="s-num"><span data-count="83">0</span><span class="unit">篇</span></div>
+            <div class="s-sub">运营近一年 <em>持续更新</em></div>
+          </div>
+        </div>
+
+        <div class="met-shot reveal d2">
+          <img src="图片/账号数据.png" alt="小红书账号数据截图">
+          <span class="met-shot-cap">真实账号数据截图</span>
+        </div>
+      </div>
+
+      <div class="met-foot reveal d2">
+        <span class="mf-label">合作变现 · MONETIZATION</span>
+        <span class="mf-num">5k+</span>
+        <span class="mf-sub">半年内合作推流变现</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 精选画廊 ============ -->
+  <section class="section" id="gallery">
+    <div class="wrap">
+      <div class="gal-head">
+        <div>
+          <div class="eyebrow reveal">精选 · HIGHLIGHTS</div>
+          <h2 class="section-title reveal d1">精选笔记</h2>
+        </div>
+        <p class="lead reveal d2">从 83 篇笔记中精选的代表内容，直接呈现。</p>
+      </div>
+
+      <div class="gal-grid">
+        <figure class="shot reveal"><img src="图片/笔记截图-01.png" alt="小红书笔记截图 01"></figure>
+        <figure class="shot reveal d1"><img src="图片/笔记截图-02.png" alt="小红书笔记截图 02"></figure>
+        <figure class="shot reveal d2"><img src="图片/笔记截图-03.png" alt="小红书笔记截图 03"></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 合作 / 联系 ============ -->
+  <section class="section contact" id="contact">
+    <div class="dots" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="contact-inner">
+        <div class="eyebrow reveal">合作 · CONTACT</div>
+        <h2 class="contact-title reveal d1">一起，写下一篇<em>爆款</em>。</h2>
+        <p class="contact-lead reveal d2">目前开放内容运营与图文创作的 freelance 合作。</p>
+        <a class="mail reveal d3" href="mailto:sunburn_7@foxmail.com">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          sunburn_7@foxmail.com
+        </a>
+        <div class="socials reveal d4">
+          <a class="social" href="tel:18317048464"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>电话 · 18317048464</a>
+          <a class="social" href="#"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>微信 · Praninlove-</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ Footer ============ -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand"><span class="mark"></span><span class="en">MEDIA KIT · 2021.06–2022.06</span></div>
+    <div class="foot-right">Thank you for watching&nbsp;&nbsp;·&nbsp;&nbsp;CREATIVE CONTENT &amp; BRAND PORTFOLIO</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- 滚动进度条 + 导航状态 ---- */
+  var progress = document.getElementById('progress');
+  function onScroll(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop;
+    var height = h.scrollHeight - h.clientHeight;
+    progress.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---- 滚动显现 ---- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* ---- 数字递增 ---- */
+  function animateCount(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    var sep = el.getAttribute('data-sep') === '1';
+    if(isNaN(target)) return;
+    var duration = 1600;
+    var start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      var val = target * eased;
+      var txt = decimals > 0 ? val.toFixed(decimals) : (sep ? Math.round(val).toLocaleString('en-US') : Math.round(val).toString());
+      el.textContent = txt + suffix;
+      if(p < 1){ requestAnimationFrame(step); }
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ---- 爆文率圆环 ---- */
+  var arc = document.getElementById('arc');
+  var ringNum = document.getElementById('ringNum');
+  var ringTarget = 33.2;
+  var CIRCUM = 2 * Math.PI * 88; // r = 88
+  // 初始隐藏弧线，避免加载时闪现整圈
+  arc.style.strokeDasharray = CIRCUM;
+  arc.style.strokeDashoffset = CIRCUM;
+
+  function animateRing(){
+    var duration = 1800, start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      var val = ringTarget * eased;
+      ringNum.textContent = val.toFixed(1);
+      arc.style.strokeDasharray = CIRCUM;
+      arc.style.strokeDashoffset = CIRCUM * (1 - eased);
+      if(p < 1){ requestAnimationFrame(step); }
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ---- 数据区：一次触发递增 + 圆环 ---- */
+  var metricsSection = document.getElementById('metrics');
+  var metIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        /* 打印/导出时数字与圆环由 __fitPages 写入终值，这里不播动画避免覆盖 */
+        if(!window.matchMedia('print').matches){
+          document.querySelectorAll('[data-count]').forEach(animateCount);
+          animateRing();
+        }
+        metIO.disconnect();
+      }
+    });
+  }, {threshold:0.35});
+  metIO.observe(metricsSection);
+
+  /* ---- 英雄笔记卡 3D 悬停 ---- */
+  var tilt = document.getElementById('tilt');
+  var inner = document.getElementById('tiltInner');
+  if(tilt && inner && !reduced){
+    var raf = null, tx = 0, ty = 0, cx = 0, cy = 0;
+    tilt.addEventListener('mousemove', function(e){
+      var r = tilt.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      if(!raf) raf = requestAnimationFrame(animate);
+    });
+    tilt.addEventListener('mouseleave', function(){ tx = 0; ty = 0; if(!raf) raf = requestAnimationFrame(animate); });
+    function animate(){
+      cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+      inner.style.transform = 'rotateX(' + (-cy * 8).toFixed(2) + 'deg) rotateY(' + (cx * 11).toFixed(2) + 'deg)';
+      raf = (Math.abs(tx - cx) < 0.001 && Math.abs(ty - cy) < 0.001) ? null : requestAnimationFrame(animate);
+    }
+  }
+
+})();
+</script>
+
+<script>
+/* ============================================================
+   打印导出 JS —— 区块内容包裹 .print-fit 并按页高等比缩放
+   方案：人生四格项目验证过（纯 scale()，不加 translateY）
+   ============================================================ */
+(function(){
+  var MM = 96 / 25.4; // mm -> px
+
+  /* 数字与圆环写入终值（导出/打印时定格，避免停在 0 或半圈） */
+  function setFinals(){
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      var target = parseFloat(el.getAttribute('data-count'));
+      var decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+      var suffix = el.getAttribute('data-suffix') || '';
+      var sep = el.getAttribute('data-sep') === '1';
+      if(isNaN(target)) return;
+      var txt = decimals > 0 ? target.toFixed(decimals) : (sep ? Math.round(target).toLocaleString('en-US') : Math.round(target).toString());
+      el.textContent = txt + suffix;
+    });
+    var arc = document.getElementById('arc');
+    var ringNum = document.getElementById('ringNum');
+    if(arc && ringNum){
+      var CIRCUM = 2 * Math.PI * 88;
+      ringNum.textContent = '33.2';
+      arc.style.strokeDasharray = CIRCUM;
+      arc.style.strokeDashoffset = CIRCUM * (1 - 33.2 / 100);
+    }
+  }
+
+  function fitPages(){
+    setFinals();
+    document.querySelectorAll('.hero, .position, .metrics, #gallery, .contact').forEach(function(sec){
+      var inner = sec.querySelector('.print-fit');
+      if(!inner){
+        inner = document.createElement('div');
+        inner.className = 'print-fit';
+        while(sec.firstChild) inner.appendChild(sec.firstChild);
+        sec.appendChild(inner);
+      }
+      inner.style.transform = '';
+      /* @media print 布局下、未缩放的实际高度（含 .print-fit 的 16mm 上下 padding）。
+         用 getBoundingClientRect 而非 scrollHeight，避免被绝对定位元素虚高 */
+      var natural = inner.getBoundingClientRect().height;
+      /* 只缩小不放大：过高的页缩到 208mm（210mm 减 16mm*2，留 1mm 余量），
+         矮的页保持原样居中。scale() 围绕 center 中心缩放，配合区块 flex 居中，
+         内容不会跑到页外 —— 不要加 translateY */
+      var s = Math.min(1, (208 * MM) / natural);
+      inner.style.transform = s < 1 ? 'scale(' + s + ')' : '';
+    });
+  }
+  window.__fitPages = fitPages;                     // 供无头导出脚本调用
+  window.addEventListener('beforeprint', fitPages); // 浏览器手动 Ctrl+P 也生效
+  /* 打印结束：还原 transform 并把内容从 .print-fit 里移回原位，
+     避免浏览器打印过一次后屏幕布局被多包一层搞乱 */
+  window.addEventListener('afterprint', function(){
+    document.querySelectorAll('.print-fit').forEach(function(inner){
+      inner.style.transform = '';
+      var parent = inner.parentNode;
+      while(inner.firstChild) parent.insertBefore(inner.firstChild, inner);
+      parent.removeChild(inner);
+    });
+  });
+})();
+</script>
+</body>
+</html>

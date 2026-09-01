@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小卡超市 · 聚焦「小卡」的垂类购物小程序</title>
+<meta name="description" content="小卡超市 —— 一个专业、透明、规范化的小卡垂类购物平台。让搜索更清晰，价格更透明，交易更安心。">
+
+<!-- ============ 字体 ============ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   小卡超市 · 作品集
+   设计语言：Artistic Minimalism（艺术极简）+ 收藏卡片质感
+   签名元素：「镭射全息」渐变 —— 滚动进度条 / 悬停微光
+   图片规则：所有截图按原始比例展示（height:auto），绝不裁切
+   ============================================================ */
+
+:root{
+  --paper:      #FAF8FB;
+  --paper-2:    #F3EFF6;
+  --ink:        #1A1A1A;
+  --ink-soft:   #57524A;
+  --ink-faint:  #9C968C;
+  --line:       #E8E2EC;
+  --line-strong:#D9D1E2;
+
+  --rose:       #E7B0C4;
+  --rose-deep:  #C98CA6;
+  --gold:       #D2B98C;
+  --lilac:      #A791D2;
+
+  --holo: linear-gradient(115deg, var(--rose) 0%, var(--gold) 38%, var(--lilac) 72%, var(--rose) 100%);
+  --holo-soft: linear-gradient(115deg, rgba(231,176,196,.45), rgba(210,185,140,.38) 38%, rgba(169,148,212,.45) 72%, rgba(231,176,196,.45));
+
+  --serif: "Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:  "Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --latin: "Cormorant Garamond","Georgia",serif;
+
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --gutter: clamp(20px, 5vw, 72px);
+  --maxw: 1180px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-weight:300;line-height:1.85;letter-spacing:.01em;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+img,video{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+::selection{background:var(--rose);color:#fff;}
+
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:200;background:var(--holo);background-size:300% 100%;animation:holoShift 9s linear infinite;}
+@keyframes holoShift{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+
+/* 导航 */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px var(--gutter);
+  transition:background .5s var(--ease), padding .5s var(--ease), box-shadow .5s var(--ease);
+}
+.nav.is-scrolled{background:rgba(250,248,251,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding-top:12px;padding-bottom:12px;box-shadow:0 1px 0 var(--line);}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-weight:600;font-size:15px;letter-spacing:.12em;}
+.brand .mark{width:26px;height:26px;object-fit:contain;display:block;flex:none;}
+.nav-links{display:flex;gap:clamp(18px,3vw,38px);}
+.nav-links a{font-size:13px;letter-spacing:.08em;color:var(--ink-soft);position:relative;padding:4px 0;transition:color .3s var(--ease);}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--holo);transition:width .4s var(--ease);}
+.nav-links a:hover{color:var(--ink);}
+.nav-links a:hover::after{width:100%;}
+
+/* 通用 */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
+.section{padding:clamp(80px,12vh,140px) 0;}
+.eyebrow{display:flex;align-items:center;gap:14px;font-family:var(--latin);font-style:italic;font-size:15px;color:var(--ink-faint);letter-spacing:.06em;}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--holo);}
+.section-title{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.6vw,50px);line-height:1.25;letter-spacing:.02em;margin-top:18px;}
+.lead{color:var(--ink-soft);font-size:clamp(15px,1.7vw,18px);line-height:2;max-width:60ch;margin-top:20px;}
+
+.holo-text{
+  background:linear-gradient(120deg, #C0AFE6 0%, var(--rose) 22%, var(--lilac) 46%, var(--gold) 68%, #C0AFE6 100%);
+  background-size:300% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  animation:holoShift 20s linear infinite;
+}
+
+/* 显现 */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease), transform 1s var(--ease);}
+.reveal.is-visible{opacity:1;transform:translateY(0);}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+
+/* 截图容器：按原始比例，绝不裁切 */
+.shot{
+  border-radius:16px;overflow:hidden;background:#fff;
+  border:1px solid var(--line);
+  box-shadow:0 24px 55px -26px rgba(26,26,26,.35);
+  position:relative;
+}
+.shot img{width:100%;height:auto;display:block;transition:transform 1s var(--ease);}
+.shot .sheen{position:absolute;inset:0;pointer-events:none;background:var(--holo-soft);mix-blend-mode:multiply;opacity:0;transition:opacity .6s var(--ease);}
+.shot:hover img{transform:scale(1.03);}
+.shot:hover .sheen{opacity:.45;}
+
+/* ============ Hero ============ */
+.hero{
+  position:relative;min-height:100vh;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:clamp(40px,6vw,88px);
+  padding:clamp(160px,19vh,210px) var(--gutter) clamp(110px,14vh,160px);
+  overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(52% 42% at 80% 30%, rgba(231,176,196,.13), transparent 70%),
+    radial-gradient(46% 40% at 18% 80%, rgba(169,148,212,.11), transparent 70%);
+}
+.hero-inner{position:relative;z-index:2;}
+.hero-eyebrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px;letter-spacing:.14em;color:var(--ink-soft);opacity:0;animation:rise .9s var(--ease) .1s forwards;}
+.hero-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--holo);flex:none;}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(56px,12vw,140px);line-height:1.05;letter-spacing:.01em;margin-top:30px;opacity:0;animation:rise 1s var(--ease) .25s forwards;}
+.hero .latin-tag{font-family:var(--latin);font-style:italic;font-size:clamp(16px,2.2vw,22px);color:var(--ink-faint);letter-spacing:.24em;margin-top:14px;opacity:0;animation:rise 1s var(--ease) .4s forwards;}
+.hero .slogan{font-family:var(--serif);font-weight:300;font-size:clamp(19px,3vw,30px);line-height:1.65;margin-top:42px;max-width:22em;opacity:0;animation:rise 1s var(--ease) .55s forwards;}
+.hero .slogan b{font-weight:600;}
+.hero .sub{color:var(--ink-soft);font-size:clamp(14px,1.6vw,16px);line-height:2.1;margin-top:24px;max-width:46ch;opacity:0;animation:rise 1s var(--ease) .68s forwards;}
+
+.hero-stage{position:relative;z-index:1;width:clamp(200px,23vw,340px);opacity:0;animation:rise 1.2s var(--ease) .5s forwards;}
+.tilt{perspective:1100px;}
+.tilt-inner{transform-style:preserve-3d;transition:transform .18s ease-out;will-change:transform;}
+.hero-stage .shot{border-radius:0;background:transparent;border:none;box-shadow:none;}
+.phone-tag{position:absolute;left:-26px;bottom:44px;transform:rotate(-90deg);transform-origin:left center;font-family:var(--latin);font-style:italic;font-size:12px;letter-spacing:.22em;color:var(--ink-faint);white-space:nowrap;}
+
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ============ 初衷 ============ */
+.motive{border-top:1px solid var(--line);padding:clamp(56px,9vh,96px) 0;}
+.motive-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(32px,6vw,80px);align-items:start;}
+.motive-title{font-family:var(--serif);font-weight:300;font-size:clamp(26px,3.6vw,42px);line-height:1.5;margin-top:20px;letter-spacing:.01em;}
+.motive-title em{font-style:normal;font-weight:600;}
+.motive-sub{color:var(--ink-soft);font-size:15px;line-height:2;margin-top:20px;max-width:56ch;}
+.motive-pains{display:flex;flex-direction:column;}
+.mp{display:flex;gap:20px;padding:24px 0;border-top:1px solid var(--line);}
+.mp:last-child{border-bottom:1px solid var(--line);}
+.mp .zi{font-family:var(--serif);font-weight:600;font-size:clamp(40px,5vw,58px);line-height:1;width:1.2em;flex:none;}
+.mp b{font-family:var(--serif);font-weight:600;font-size:17px;display:block;letter-spacing:.05em;}
+.mp p{color:var(--ink-soft);font-size:13.5px;line-height:1.8;margin-top:6px;}
+
+/* ============ 产品演示 ============ */
+.demo{padding-top:0;}
+.demo-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;}
+.demo-stage{display:flex;justify-content:center;margin-top:clamp(40px,6vw,70px);}
+.demo-frame{
+  width:min(420px,80vw);aspect-ratio:592/1280;border-radius:24px;overflow:hidden;
+  background:#0f0f0f;border:1px solid var(--line);
+  box-shadow:0 44px 100px -34px rgba(26,26,26,.55);
+  position:relative;
+}
+.demo-frame video{width:100%;height:100%;object-fit:cover;display:block;}
+.demo-frame .sheen{position:absolute;inset:0;pointer-events:none;background:var(--holo-soft);mix-blend-mode:screen;opacity:.14;}
+.demo-caption{margin-top:22px;text-align:center;font-size:13px;letter-spacing:.08em;color:var(--ink-faint);}
+
+/* ============ 核心特色 ============ */
+#features,#f-price,#f-aftersale{padding:0;}
+.feature{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(32px,6vw,80px);align-items:center;
+  padding:clamp(48px,6vw,72px) 0;border-top:1px solid var(--line);
+}
+.feature.rev .f-visual{order:2;}
+.feature .f-num{font-family:var(--latin);font-style:italic;font-size:16px;color:var(--ink-faint);letter-spacing:.1em;}
+.feature h3{font-family:var(--serif);font-weight:600;font-size:clamp(24px,3.2vw,36px);margin-top:12px;letter-spacing:.02em;line-height:1.35;}
+.feature .f-en{font-family:var(--latin);font-style:italic;font-size:15px;color:var(--ink-faint);letter-spacing:.16em;margin-top:8px;}
+.feature p{color:var(--ink-soft);font-size:15px;line-height:2;margin-top:20px;max-width:52ch;}
+.feature .f-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;}
+.feature .f-tags span{font-size:12px;letter-spacing:.06em;color:var(--ink-soft);border:1px solid var(--line);border-radius:99px;padding:6px 14px;}
+
+.f-visual{display:flex;gap:16px;justify-content:center;align-items:flex-start;}
+.f-visual .shot{flex:1;max-width:200px;}
+.f-visual .shot-lg{max-width:260px;}
+.f-visual .shot:nth-child(2){margin-top:38px;}
+.f-3{display:flex;gap:16px;justify-content:center;align-items:flex-end;}
+.f-3 .f-col{display:flex;flex-direction:column;gap:16px;align-items:center;}
+.f-3 .f-col .shot{flex:none;width:200px;}
+.f-3 .f-col .shot:last-child{background:transparent;border:none;box-shadow:none;}
+.f-3 .f-col .shot:last-child img{border-radius:12px;}
+.f-3 .f-col .shot:last-child .sheen{display:none;}
+.f-visual.f-3 .shot{margin-top:0;}
+
+.flow{margin-top:28px;display:flex;flex-direction:column;}
+.flow .step{display:flex;gap:18px;padding:16px 0;border-top:1px solid var(--line);}
+.flow .step:last-child{border-bottom:1px solid var(--line);}
+.flow .step .i{font-family:var(--latin);font-style:italic;color:var(--rose-deep);font-size:16px;width:22px;flex:none;margin-top:2px;}
+.flow .step .t b{font-family:var(--serif);font-weight:600;font-size:15.5px;display:block;letter-spacing:.03em;}
+.flow .step .t span{color:var(--ink-soft);font-size:13.5px;line-height:1.7;display:block;margin-top:3px;}
+
+/* ============ 营销方案 ============ */
+.marketing{padding-top:0;}
+.mk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.5vw,28px);margin-top:clamp(40px,6vw,64px);}
+.mk-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:clamp(24px,3vw,34px) clamp(20px,2.5vw,30px);transition:transform .6s var(--ease), box-shadow .6s var(--ease);}
+.mk-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px -30px rgba(26,26,26,.22);}
+.mk-card b{font-family:var(--serif);font-weight:600;font-size:clamp(20px,2.6vw,26px);display:block;letter-spacing:.02em;}
+.mk-card .mk-en{font-family:var(--latin);font-style:italic;font-size:13px;color:var(--ink-faint);letter-spacing:.14em;margin-top:6px;}
+.mk-card p{color:var(--ink-soft);font-size:13.5px;line-height:1.9;margin-top:14px;}
+.mk-media{display:flex;flex-direction:column;gap:16px;margin-bottom:24px;}
+.mk-item .shot{box-shadow:0 18px 42px -26px rgba(26,26,26,.32);}
+.mk-media .mk-sec{width:54%;}
+.mk-cap{font-family:var(--latin);font-style:italic;font-size:11px;color:var(--ink-faint);letter-spacing:.12em;margin-top:9px;}
+
+/* ============ 结语：整页收尾（仿「小红书穿搭账号」末页，居中满版） ============ */
+footer{border-top:1px solid var(--line);padding:clamp(56px,7vw,84px) 0 44px;background:var(--paper-2);position:relative;overflow:hidden;}
+footer::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(50% 60% at 50% 120%, rgba(231,176,196,.14), transparent 70%);}
+footer::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(45% 55% at 50% 0%, rgba(169,148,212,.10), transparent 70%);}
+.foot-inner{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);position:relative;text-align:center;}
+.foot-eyebrow{display:flex;align-items:center;justify-content:center;gap:14px;font-family:var(--latin);font-style:italic;font-size:15px;color:var(--ink-faint);letter-spacing:.14em;}
+.foot-eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--holo);flex:none;}
+.foot-logo{display:inline-flex;align-items:center;gap:18px;margin-top:34px;font-family:var(--serif);font-weight:600;font-size:clamp(30px,4.2vw,46px);letter-spacing:.1em;}
+.foot-logo .mark{width:56px;height:56px;object-fit:contain;display:block;}
+.foot-slogan{font-family:var(--serif);font-weight:300;color:var(--ink-soft);font-size:clamp(14px,1.7vw,19px);margin-top:20px;letter-spacing:.03em;}
+.foot-note{font-family:var(--serif);font-weight:300;color:var(--ink-soft);font-size:clamp(14.5px,1.8vw,18px);margin-top:34px;letter-spacing:.04em;}
+.foot-mail{display:inline-flex;align-items:center;gap:12px;margin-top:30px;font-family:var(--latin);font-style:italic;font-weight:500;font-size:clamp(19px,2.4vw,25px);color:var(--ink);letter-spacing:.02em;border-bottom:1px solid var(--line-strong);padding-bottom:6px;transition:color .35s var(--ease),border-color .35s var(--ease);}
+.foot-mail:hover{color:var(--rose);border-color:var(--rose);}
+.foot-mail svg{width:20px;height:20px;fill:none;stroke:var(--lilac);stroke-width:1.5;flex:none;}
+.foot-social{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:36px;}
+.foot-chip{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-size:13px;letter-spacing:.1em;color:var(--ink-soft);border:1px solid var(--line-strong);border-radius:999px;padding:12px 24px;background:#fff;transition:all .45s var(--ease);}
+.foot-chip svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;flex:none;}
+.foot-chip:hover{background:linear-gradient(115deg,rgba(231,176,196,.16),rgba(169,148,212,.16));color:var(--ink);border-color:rgba(169,148,212,.45);transform:translateY(-3px);box-shadow:0 18px 36px -18px rgba(169,148,212,.45);}
+.foot-end{margin-top:44px;font-family:var(--latin);font-style:italic;color:var(--ink-faint);font-size:13px;letter-spacing:.16em;}
+
+/* ============ 响应式 ============ */
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:150px;padding-bottom:70px;gap:48px;}
+  .hero-stage{width:min(280px,64vw);margin:0 auto;}
+  .phone-tag{display:none;}
+  .motive-grid{grid-template-columns:1fr;gap:36px;}
+  .feature{grid-template-columns:1fr;gap:36px;}
+  .feature.rev .f-visual{order:0;}
+  .f-visual{order:-1;}
+  .mk-grid{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+}
+@media (max-width:520px){
+  .f-visual{gap:12px;}
+  .f-visual .shot{max-width:46vw;}
+}
+
+/* 减少动效 */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important;scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;}
+  .hero h1,.hero .slogan,.hero .sub,.hero .latin-tag,.hero-eyebrow,.hero-stage{opacity:1;animation:none;}
+}
+
+/* ============================================================
+   打印导出 —— 每个区块 = 一张横向 A4（297×210mm）
+   复用自 人生四格/导出方法说明.md，选择器适配小卡超市：
+   区块 = .hero / .motive / .section / footer，共 8 页
+   屏幕排版完全不变，只在打印/导出时按区块分页、按页高等比缩放
+   ============================================================ */
+.print-fit{display:contents}   /* 包装层在屏幕上隐形，不影响任何布局 */
+
+@page{size:A4 landscape;margin:0}
+@media print{
+  *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+  /* ① 关滚动显现/进入动画，固定元素不参与分页 */
+  .reveal{opacity:1 !important;transform:none !important;transition:none !important}
+  .hero-eyebrow,.hero h1,.hero .latin-tag,.hero .slogan,.hero .sub,.hero-stage{
+    opacity:1 !important;animation:none !important;transform:none !important;
+  }
+  .progress,.holo-text,.nav-links a::after{animation:none !important}
+  .nav,.progress{display:none !important}
+  .tilt-inner{transform:none !important}
+
+  /* 渐变文字：PDF 打印不支持 background-clip:text，兜底为品牌薰衣草紫实色 */
+  .holo-text{
+    background:none !important;
+    -webkit-background-clip:initial !important; background-clip:initial !important;
+    -webkit-text-fill-color:#8B7BB8 !important; color:#8B7BB8 !important;
+  }
+
+  /* ② 每个区块 = 一页横向 A4，flex 居中；!important 防 page.pdf() 窄宽重排反杀 */
+  .hero,.motive,.section,footer{
+    width:297mm !important;height:210mm !important;
+    min-height:0 !important;max-width:none !important;
+    margin:0 !important;padding:0 !important;
+    box-sizing:border-box;overflow:hidden;
+    display:flex !important;align-items:center !important;justify-content:center !important;
+  }
+  .motive,.section,footer{break-before:page}
+  .hero{break-before:auto}
+
+  /* ③ 内容容器：铺满页宽、自带边距，供 JS transform:scale 围绕中心缩放 */
+  .print-fit{
+    display:block;
+    width:100% !important;
+    padding:14mm 12mm;   /* 上下 14mm*2 会在 JS 缩放目标(182mm)里扣除 */
+    box-sizing:border-box;
+    position:relative;   /* 渐变文字 SVG 叠层以 .print-fit 为定位锚点 */
+    transform-origin:center center;
+  }
+  /* 屏幕上的限宽容器放开来铺满，否则居中失效 */
+  .print-fit .wrap{max-width:none !important;margin:0 !important;padding:0 !important}
+
+  /* 收尾页：内容竖向铺满整页高度（只剩 eyebrow+logo+slogan，用 flex space-evenly 撑开） */
+  footer .foot-inner{
+    display:flex !important;flex-direction:column;justify-content:space-evenly;align-items:center;
+    min-height:580px !important;width:100% !important;max-width:none !important;padding:0 !important;
+  }
+
+  /* ---- 各区块打印细节 ---- */
+  /* hero：文本 + 手机 左右排布 */
+  .hero .print-fit{display:flex !important;flex-direction:row;align-items:center;justify-content:center;gap:clamp(28px,5vw,60px)}
+  .hero .hero-inner{flex:1;min-width:0}
+  .hero .hero-stage{flex:none;width:min(280px,26vw)}
+  .hero h1{font-size:clamp(52px,7.5vw,86px);margin-top:6px}
+  .hero .latin-tag{font-size:clamp(13px,1.8vw,17px);margin-top:8px}
+  .hero .slogan{font-size:clamp(17px,2.3vw,23px);margin-top:14px}
+  .hero .sub{font-size:clamp(12.5px,1.5vw,15px);margin-top:12px}
+
+  /* 多列 grid 压死，防窄宽断点塌成单列 */
+  .print-fit .motive-grid{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) !important;gap:clamp(24px,4vw,56px) !important}
+  .print-fit .feature{grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;gap:clamp(22px,3.5vw,48px) !important;padding:8px 0 !important;border-top:none !important}
+  .print-fit .feature .f-visual{order:0 !important}   /* order 只接受整数：0 复位，防止窄宽断点 order:-1 把图挪到左列 */
+  .print-fit .mk-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:clamp(14px,2vw,24px) !important}
+  .print-fit .mk-card{padding:12px !important}
+
+  /* 截图/信息密度微调 */
+  .print-fit .f-visual .shot{max-width:230px}
+  .print-fit .f-tags span{font-size:11px;padding:5px 12px}
+  .print-fit .flow .step{padding:11px 0 !important}
+  .print-fit .flow .step .t span{font-size:13px}
+  .print-fit .lead{font-size:clamp(13px,1.6vw,16px)}
+
+  /* 营销页：保持 A4 横向（与其它页一致）；压缩垂直空间让缩放系数接近 1，
+     于是卡片更满宽、截图随卡片变宽、正文更大、微博图单独缩小。
+     注意 .marketing 是 .print-fit 的父级，选择器要写 .marketing .print-fit … */
+  .marketing .print-fit .section-title{font-size:clamp(28px,3.6vw,40px);line-height:1.15;margin-top:8px}
+  /* lead 默认 max-width:60ch 会把中文截成两行，打印放开成单行省下约 36px */
+  .marketing .print-fit .lead{margin-top:8px;line-height:1.7;max-width:100%;font-size:15px}
+  .print-fit .mk-grid{margin-top:10px !important}
+  .print-fit .mk-item .shot{max-width:100%;margin:0 auto}    /* 截图撑满卡片内容宽，高度等比 */
+  .print-fit .mk-media .mk-sec{width:36%}                    /* 微博图单独缩小，双微框能装下 */
+  .print-fit .mk-media{gap:4px;margin-bottom:4px}
+  .print-fit .mk-card b{font-size:21px;line-height:1.2}
+  .print-fit .mk-card .mk-en{font-size:13px}
+  .print-fit .mk-card p{font-size:14px;line-height:1.6;margin-top:4px}
+  .print-fit .mk-cap{font-size:11px;margin-top:4px}
+
+  /* 演示页：视频无法入 PDF，替换为品牌占位卡 */
+  .demo-frame video{display:none !important}
+  .demo-frame{
+    width:min(520px,80%) !important;aspect-ratio:auto !important;min-height:220px;
+    border-radius:18px !important;box-shadow:none !important;
+    background:linear-gradient(135deg,#F3EFF6,#E7E0F0) !important;
+    border:1px dashed #C9BFD8;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .demo-frame::after{content:"产品演示视频 —— 见附件：../../视频/小卡超市.mp4";font-size:15px;letter-spacing:.06em;color:#7C7390}
+  .demo-caption{display:none !important}
+}
+
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ============ 导航 ============ -->
+<header class="nav" id="nav">
+  <a class="brand" href="#top"><img class="mark" src="图片/品牌标志.png" alt="小卡超市">小卡超市</a>
+  <nav class="nav-links">
+    <a href="#demo">演示</a>
+    <a href="#features">核心特色</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ 开篇 ============ -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow"><span class="dot"></span>垂类购物小程序</div>
+      <h1>小<span class="holo-text">卡</span>超市</h1>
+      <div class="latin-tag">POCA&nbsp;&nbsp;·&nbsp;&nbsp;THE&nbsp;PHOTOCARD&nbsp;MARKET</div>
+      <p class="slogan">为每一张「小卡」，<b>寻一个可信的归处。</b></p>
+      <p class="sub">聚焦「小卡」的垂类购物小程序 —— 让搜索更清晰，价格更透明，交易更安心。</p>
+    </div>
+
+    <div class="hero-stage">
+      <div class="tilt" id="tilt">
+        <div class="tilt-inner" id="tiltInner">
+          <div class="shot">
+            <!-- 请在此处替换为 PPT/PDF 提取的图片路径：小程序首页截图 -->
+            <img src="图片/小程序首页.png" alt="小卡超市小程序首页">
+            <span class="sheen"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 初衷 ============ -->
+  <section class="motive">
+    <div class="wrap">
+      <div class="motive-grid">
+        <div class="reveal">
+          <div class="eyebrow">Why · 我们的初衷</div>
+          <p class="motive-title">让每一份热爱，<br>都被<em>认真对待</em>。</p>
+          <p class="motive-sub">当一张掌心大小的卡片，成为千万年轻人的情感载体，混乱的搜索、失真的价格与难辨的真假，却让这份热爱变得沉重。所以我们想做的，是一个专业、透明、规范化的小卡市场。</p>
+        </div>
+        <div class="motive-pains reveal d1">
+          <div class="mp"><span class="zi holo-text">乱</span><div><b>搜索混乱</b><p>占用 tag、结果失准，难寻心头好。</p></div></div>
+          <div class="mp"><span class="zi holo-text">贵</span><div><b>价格失真</b><p>同卡异价，难辨真正的最低价。</p></div></div>
+          <div class="mp"><span class="zi holo-text">假</span><div><b>真假难辨</b><p>知假卖假，售后缺位。</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 产品演示 ============ -->
+  <section class="section demo" id="demo">
+    <div class="wrap">
+      <div class="demo-head">
+        <div>
+          <div class="eyebrow reveal">Product Demo</div>
+          <h2 class="section-title reveal d1">产品<span class="holo-text">演示</span></h2>
+        </div>
+        <p class="lead reveal d2" style="margin-top:0;max-width:44ch;">一段视频，看懂小卡超市如何让每一张卡的流转，都清晰、透明、安心。</p>
+      </div>
+
+      <div class="demo-stage reveal d1">
+        <!-- 产品演示视频（竖屏 592×1280，封面为视频第一帧） -->
+        <div class="demo-frame">
+          <video src="../../视频/小卡超市.mp4" controls playsinline preload="auto"></video>
+          <span class="sheen"></span>
+        </div>
+      </div>
+      <p class="demo-caption reveal d2">— 产品演示视频</p>
+    </div>
+  </section>
+
+  <!-- ============ 核心特色 01 · 搜索 ============ -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="feature">
+        <div class="f-text reveal">
+          <div class="f-num">核心特色 · 01</div>
+          <h3>搜索分类明确</h3>
+          <div class="f-en">Precise Search &amp; Categorisation</div>
+          <p>精确分类每个团体与成员，点击头像即可浏览其全部卡片。</p>
+          <p>标准化命名，让搜索不再「海底捞月」。</p>
+          <p>看到喜欢的小卡却不知道名字？点开该明星的分类即可轻松找到。</p>
+          <div class="f-tags"><span>团体 / 成员分类</span><span>标准化命名</span><span>13,000+ 资料库</span></div>
+        </div>
+        <div class="f-visual reveal d1">
+          <!-- 请在此处替换为 PPT/PDF 提取的图片路径：搜索 / 分类界面截图 -->
+          <div class="shot"><img src="图片/搜索分类界面.png" alt="搜索分类界面"><span class="sheen"></span></div>
+          <div class="shot"><img src="图片/成员卡片界面.png" alt="成员卡片界面"><span class="sheen"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 核心特色 02 · 价格 ============ -->
+  <section class="section" id="f-price">
+    <div class="wrap">
+      <div class="feature rev">
+        <div class="f-text reveal">
+          <div class="f-num">核心特色 · 02</div>
+          <h3>实时价格更新</h3>
+          <div class="f-en">Real-time Price Matching</div>
+          <p>平台实时撮合买卖双方的期望价格 —— 买家永远拿到全平台最低价，卖家永远等到最高出价。价格不再是黑箱，而是一张透明、可预期的交易之网。</p>
+          <div class="flow">
+            <div class="step"><span class="i">i</span><div class="t"><b>买家发布需求</b><span>平台按全平台最低价实时更新，锁定最优成交。</span></div></div>
+            <div class="step"><span class="i">ii</span><div class="t"><b>卖家发布需求</b><span>平台按最高出价实时更新，让每张卡卖出价值。</span></div></div>
+            <div class="step"><span class="i">iii</span><div class="t"><b>透明可预期</b><span>价格回归秩序，交易不再靠运气与信息差。</span></div></div>
+          </div>
+        </div>
+        <div class="f-visual f-3 reveal d1">
+          <div class="f-col">
+            <div class="shot"><img src="图片/主页.png" alt="小卡超市主页"><span class="sheen"></span></div>
+            <div class="shot"><img src="图片/买入价卖出价.png" alt="买入价卖出价截图"><span class="sheen"></span></div>
+          </div>
+          <div class="shot"><img src="图片/卡片详情页.png" alt="某小卡的详细页"><span class="sheen"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 核心特色 03 · 售后 ============ -->
+  <section class="section" id="f-aftersale">
+    <div class="wrap">
+      <div class="feature">
+        <div class="f-text reveal">
+          <div class="f-num">核心特色 · 03</div>
+          <h3>假卡售后保障</h3>
+          <div class="f-en">Authenticity &amp; After-sales</div>
+          <p>「假」是收藏最大的敌人。我们把鉴定前置到售后链路里 —— 全程开箱证据 + 官方鉴定团队，判假即退，卖家承担鉴定费并受平台处罚；判真则买家承担。规则清晰，责任分明。</p>
+          <div class="flow">
+            <div class="step"><span class="i">i</span><div class="t"><b>全程开箱证据</b><span>买家保留完整开箱记录，作为鉴定依据。</span></div></div>
+            <div class="step"><span class="i">ii</span><div class="t"><b>官方鉴定团队</b><span>专业鉴定师有偿鉴别，结论权威可信。</span></div></div>
+            <div class="step"><span class="i">iii</span><div class="t"><b>判假即退 · 责任分明</b><span>假则卖家担责并受处罚，真则买家付费。</span></div></div>
+          </div>
+        </div>
+        <div class="f-visual reveal d1">
+          <div class="shot shot-lg"><img src="图片/鉴定流程界面.png" alt="鉴定流程界面"><span class="sheen"></span></div>
+          <div class="shot"><img src="图片/假卡售后界面.png" alt="假卡售后界面"><span class="sheen"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 营销方案 ============ -->
+  <section class="section marketing" id="marketing">
+    <div class="wrap">
+      <div class="eyebrow reveal">Marketing Plan</div>
+      <h2 class="section-title reveal d1">营销<span class="holo-text">方案</span></h2>
+      <p class="lead reveal d2">围绕小卡的核心人群，借内容与社区，让每一次曝光都指向同一个可信的归处。</p>
+
+      <div class="mk-grid reveal d1">
+        <div class="mk-card">
+          <div class="mk-media">
+            <div class="mk-item">
+              <div class="shot"><img src="图片/微信公众号运营截图.png" alt="微信公众号运营截图"><span class="sheen"></span></div>
+              <div class="mk-cap">微信公众号 · 官方推送</div>
+            </div>
+            <div class="mk-item">
+              <div class="shot mk-sec"><img src="图片/微博运营截图.png" alt="微博运营截图"><span class="sheen"></span></div>
+              <div class="mk-cap">微博 · KOL 联动</div>
+            </div>
+          </div>
+          <b>双微</b>
+          <div class="mk-en">微信 · 微博</div>
+          <p>公众号每周推送功能更新与福利活动，微博借明星超话主持人、大吧吧主等 KOL 影响力扩圈，双端合力指向小程序成交。</p>
+        </div>
+        <div class="mk-card">
+          <div class="mk-media">
+            <div class="mk-item">
+              <div class="shot"><img src="图片/抖音运营截图.png" alt="抖音运营截图"><span class="sheen"></span></div>
+              <div class="mk-cap">抖音 · 短视频引流</div>
+            </div>
+          </div>
+          <b>抖音</b>
+          <div class="mk-en">Douyin</div>
+          <p>官方抖音号以短视频开箱、鉴卡引流，并与小红书双平台同步宣传，扩大品牌曝光、直导小程序。</p>
+        </div>
+        <div class="mk-card">
+          <div class="mk-media">
+            <div class="mk-item">
+              <div class="shot"><img src="图片/小红书运营截图.png" alt="小红书运营截图"><span class="sheen"></span></div>
+              <div class="mk-cap">小红书 · 达人合作</div>
+            </div>
+          </div>
+          <b>小红书</b>
+          <div class="mk-en">Xiaohongshu</div>
+          <p>官方号持续发布打包技巧、小卡推荐等笔记，并与垂直达人合作，沉淀「可信、透明」口碑，圈定核心圈层。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ 结语：整页收尾 ============ -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-eyebrow"><span class="dot"></span>合作 · CONTACT</div>
+    <div class="foot-logo"><img class="mark" src="图片/品牌标志.png" alt="小卡超市">小卡超市</div>
+    <p class="foot-slogan">每一张「小卡」，寻一个可信的<span class="holo-text">归处</span>。</p>
+    <a class="foot-mail" href="mailto:sunburn_7@foxmail.com">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      sunburn_7@foxmail.com
+    </a>
+    <div class="foot-social">
+      <a class="foot-chip" href="tel:18317048464">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        电话 · 18317048464
+      </a>
+      <a class="foot-chip" href="#">
+        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        微信 · Praninlove-
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var progress = document.getElementById('progress');
+  function onScroll(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop;
+    var height = h.scrollHeight - h.clientHeight;
+    progress.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + '%';
+    var nav = document.getElementById('nav');
+    nav.classList.toggle('is-scrolled', scrolled > 30);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  var tilt = document.getElementById('tilt');
+  var inner = document.getElementById('tiltInner');
+  if(tilt && inner && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var raf = null, tx = 0, ty = 0, cx = 0, cy = 0;
+    tilt.addEventListener('mousemove', function(e){
+      var r = tilt.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      if(!raf) raf = requestAnimationFrame(animate);
+    });
+    tilt.addEventListener('mouseleave', function(){ tx = 0; ty = 0; if(!raf) raf = requestAnimationFrame(animate); });
+    function animate(){
+      cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+      inner.style.transform = 'rotateX(' + (-cy * 9).toFixed(2) + 'deg) rotateY(' + (cx * 12).toFixed(2) + 'deg)';
+      raf = (Math.abs(tx - cx) < 0.001 && Math.abs(ty - cy) < 0.001) ? null : requestAnimationFrame(animate);
+    }
+  }
+})();
+</script>
+
+<script>
+/* 打印导出：把每个区块内容包进 .print-fit，超高则围绕中心等比缩放恰好一页 */
+(function(){
+  "use strict";
+  var MM = 96 / 25.4;      // mm -> px
+  var TARGET_MM = 182;     // 210mm − 上下边距 14mm×2
+  var BLOCKS = '.hero, .motive, .section, footer';
+
+  function fitPages(){
+    document.querySelectorAll(BLOCKS).forEach(function(sec){
+      var inner = sec.querySelector('.print-fit');
+      if(!inner){
+        inner = document.createElement('div');
+        inner.className = 'print-fit';
+        while(sec.firstChild) inner.appendChild(sec.firstChild);
+        sec.appendChild(inner);
+      }
+      inner.style.transform = '';
+      /* @media print 布局下、未缩放的实际高度（含 .print-fit 的 14mm 上下 padding） */
+      var natural = inner.getBoundingClientRect().height;
+      /* 只缩小不放大：过高的页缩到 182mm，矮的保持原样。scale 围绕 center 缩放，
+         配合区块 flex 居中，内容不会跑到页外 —— 不要加 translateY */
+      var s = Math.min(1, (TARGET_MM * MM) / natural);
+      inner.style.transform = s < 1 ? 'scale(' + s + ')' : '';
+    });
+  }
+
+  /* 渐变文字导出：Chromium PDF 不支持 background-clip:text（会打出深色/实色），
+     打印时用 SVG <text> + linearGradient 叠盖在每个 .holo-text 字形上方，
+     还原品牌 holo 渐变；原 span 置 visibility:hidden 保留排版占位。
+     必须先跑 fitPages() 再跑本函数（.print-fit 包裹层与 scale 已就位）。 */
+  var holoOverlays = [];
+  window.__holoGradients = function(){
+    var NS = 'http://www.w3.org/2000/svg';
+    var STOPS = [['0%', '#C0AFE6'], ['22%', '#E7B0C4'], ['46%', '#A791D2'], ['68%', '#D2B98C'], ['100%', '#C0AFE6']];
+    document.querySelectorAll('.holo-text').forEach(function(el){
+      if(el.getAttribute('data-holo') === '1') return;
+      el.setAttribute('data-holo', '1');
+      var fit = el.closest('.print-fit');
+      if(!fit) return;
+      var cs = getComputedStyle(el);
+      var range = document.createRange();
+      range.selectNodeContents(el);
+      var box = range.getBoundingClientRect();      // 已被 scale 变形的屏幕坐标
+      var fitRect = fit.getBoundingClientRect();
+      var m = /scale\(([\d.]+)\)/.exec(fit.style.transform || '');
+      var s = m ? parseFloat(m[1]) : 1;             // 当前缩放系数
+      var W = Math.max(1, Math.ceil(box.width / s));
+      var H = Math.max(1, Math.ceil(box.height / s));
+      var L = (box.left - fitRect.left) / s;        // 换算回 .print-fit 未变形坐标系
+      var T = (box.top - fitRect.top) / s;
+      var id = 'holoG' + (holoOverlays.length + 1);
+
+      var svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('xmlns', NS);
+      svg.setAttribute('width', W);
+      svg.setAttribute('height', H);
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      svg.style.position = 'absolute';
+      svg.style.left = L + 'px';
+      svg.style.top = T + 'px';
+      svg.style.zIndex = 20;
+      svg.style.pointerEvents = 'none';
+      svg.style.overflow = 'visible';
+
+      var defs = document.createElementNS(NS, 'defs');
+      var lg = document.createElementNS(NS, 'linearGradient');
+      lg.setAttribute('id', id);
+      lg.setAttribute('gradientUnits', 'objectBoundingBox');
+      lg.setAttribute('x1', '0'); lg.setAttribute('y1', '1');  // 120deg 渐变：左下 → 右上
+      lg.setAttribute('x2', '1'); lg.setAttribute('y2', '0');
+      STOPS.forEach(function(st){
+        var stop = document.createElementNS(NS, 'stop');
+        stop.setAttribute('offset', st[0]);
+        stop.setAttribute('stop-color', st[1]);
+        lg.appendChild(stop);
+      });
+      defs.appendChild(lg);
+      svg.appendChild(defs);
+
+      var t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', '0');
+      t.setAttribute('y', '0');
+      t.setAttribute('dominant-baseline', 'text-before-edge');
+      t.setAttribute('font-family', cs.fontFamily);
+      t.setAttribute('font-size', cs.fontSize);
+      if(cs.fontWeight && cs.fontWeight !== '400') t.setAttribute('font-weight', cs.fontWeight);
+      if(cs.fontStyle && cs.fontStyle !== 'normal') t.setAttribute('font-style', cs.fontStyle);
+      t.setAttribute('fill', 'url(#' + id + ')');
+      t.textContent = el.textContent;
+      svg.appendChild(t);
+
+      fit.appendChild(svg);
+      holoOverlays.push(svg);
+      el.style.visibility = 'hidden';               // 原 span 占位但隐藏，只露出渐变
+    });
+  };
+
+  function resetHolo(){
+    holoOverlays.forEach(function(svg){ if(svg.parentNode) svg.parentNode.removeChild(svg); });
+    holoOverlays.length = 0;
+    document.querySelectorAll('.holo-text').forEach(function(el){
+      el.removeAttribute('data-holo');
+      el.style.visibility = '';
+    });
+  }
+
+  window.__fitPages = fitPages;                     // 供无头浏览器调用
+  window.addEventListener('beforeprint', function(){ // 浏览器 Ctrl+P：先 fit 后叠渐变
+    fitPages();
+    window.__holoGradients();
+  });
+  window.addEventListener('afterprint', function(){
+    resetHolo();
+    document.querySelectorAll('.print-fit').forEach(function(inner){ inner.style.transform = ''; });
+  });
+})();
+</script>
+</body>
+</html>

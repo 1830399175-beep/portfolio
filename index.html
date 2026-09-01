@@ -6,46 +6,46 @@
     /* 本机字体：迫真打字油印体（油印/打字机印刷质感） */
     @font-face {
         font-family: 'PaiZhenTypewriter';
-        src: url('fonts/迫真打字油印体.woff2') format('woff2');
+        src: url('字体/迫真打字油印体.woff2') format('woff2');
         font-weight: 400;
         font-style: normal;
     }
     @font-face {
         font-family: 'OnePunk';
-        src: url('fonts/1 Punk.ttf') format('truetype');
+        src: url('字体/1 Punk.ttf') format('truetype');
         font-weight: 400;
         font-style: normal;
     }
     @font-face {
         font-family: 'Days28';
-        src: url('fonts/28 Days Later.ttf') format('truetype');
+        src: url('字体/28 Days Later.ttf') format('truetype');
         font-weight: 400;
         font-style: normal;
     }
     /* Downloads/字体 目录下的字体 */
     @font-face {
         font-family: 'ABITE';
-        src: url('fonts/ABITE.ttf') format('truetype');
+        src: url('字体/ABITE.ttf') format('truetype');
         font-weight: 400; font-style: normal;
     }
     @font-face {
         font-family: 'DeadSec';
-        src: url('fonts/DeadSecretary.ttf') format('truetype');
+        src: url('字体/DeadSecretary.ttf') format('truetype');
         font-weight: 400; font-style: normal;
     }
     @font-face {
         font-family: 'DeadSecUnderscore';
-        src: url('fonts/DeadSecretary_underscore_version.ttf') format('truetype');
+        src: url('字体/DeadSecretary_underscore_version.ttf') format('truetype');
         font-weight: 400; font-style: normal;
     }
     @font-face {
         font-family: 'DueDate';
-        src: url('fonts/DUE.TTF') format('truetype');
+        src: url('字体/DUE.TTF') format('truetype');
         font-weight: 400; font-style: normal;
     }
     @font-face {
         font-family: 'PunkKid';
-        src: url('fonts/punk kid.ttf') format('truetype');
+        src: url('字体/punk kid.ttf') format('truetype');
         font-weight: 400; font-style: normal;
     }
     body {
@@ -96,7 +96,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        background-image: url("微信图片_20260824214502.jpg");
+        background-image: url("图片/PAGE 1/信封背景纸纹.jpg");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -238,7 +238,7 @@
         justify-content: center;
     }
     #blank-page.on { opacity: 1; visibility: visible; }
-    /* 进入空白页后的序列：先淡入提示语 → 停 1s → 淡出 → 再淡入内嵌的信封页（书脊转封面第一页） */
+    /* 进入空白页后的序列：先淡入提示语 → 停 1s → 淡出 → 再淡入内嵌的信封页（书架主页第一页） */
     #env-frame {
         position: absolute;
         inset: 0;
@@ -248,7 +248,7 @@
         background: #fffdf8;
         opacity: 0;                       /* 默认隐藏，等提示语播完再淡入 */
     }
-    /* 返回像素页的「‹」已内置于信封页（书脊转封面第一页），不在此处重复放置 */
+    /* 返回像素页的「‹」已内置于信封页（书架主页第一页），不在此处重复放置 */
     #blank-page .blank-msg {
         position: absolute;
         left: 0;
@@ -4001,7 +4001,7 @@
 <div id="vortex-fx"></div>
 <div id="blank-page">
     <div class="blank-msg">你进入了一个新的宇宙...</div>
-    <iframe id="env-frame" src="书脊转封面-调试.html" title="信封页"></iframe>
+    <iframe id="env-frame" src="书架主页.html" title="信封页"></iframe>
 </div>
 
 <script>
@@ -4121,7 +4121,7 @@
 
     /* 页面主背景纸纹图（CSS background-image，不在 <img> 里），预载后即显示 */
     var bg = new Image();
-    bg.src = '微信图片_20260824214502.jpg';
+    bg.src = '图片/PAGE 1/信封背景纸纹.jpg';
     var bgReady = bg.complete ? Promise.resolve()
         : new Promise(function (r) { bg.onload = bg.onerror = r; });
 
