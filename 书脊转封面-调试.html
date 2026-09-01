@@ -1566,10 +1566,13 @@
     backface-visibility: hidden;
     overflow-y: auto;
     background: #ffffff;
+    /* backface-visibility 无法隐藏绝对定位高 z-index 子元素（箭头/红标/滚动条），会在 180° 翻转时
+       镜像到可见侧。改由整面 visibility 控制：延迟 0.55s（翻到半程、侧面朝观众时才切面）避免翻转闪白 */
+    transition: visibility 0s .55s;
   }
   .page-face.back { transform: rotateY(180deg); }
-  /* 前后页整页等比缩放 85%（返回按钮除外）：用 zoom 模拟浏览器页面缩放 */
-  .page-zoom { zoom: 0.85; }
+  /* 前后页整页等比缩放 119%（原 85% × 140%）（返回按钮除外）：用 zoom 模拟浏览器页面缩放 */
+  .page-zoom { zoom: 1.19; }
   /* 书架页内容垂直居中：内容矮于视口时居中，高于时自然滚动不裁切 */
   .page-face.back .page-zoom {
     min-height: 100%;
@@ -1584,20 +1587,26 @@
     position: absolute; top: 0; transform: translateY(-50%);
     z-index: 999;
     font-family: 'Noto Serif SC', 'Songti SC', serif;
-    font-size: 46px; line-height: 1;
+    font-size: 64.4px; line-height: 1;   /* 46px × 140% */
     color: rgba(0,0,0,.30);
-    background: none; border: none; padding: 10px 14px;
+    background: none; border: none; padding: 14px 19.6px;
     cursor: pointer; user-select: none;
     transition: color .25s ease, transform .25s ease;
   }
-  .page-nav.left { left: 6px; }
-  .page-nav.right { right: 6px; }
+  .page-nav.left { left: 8.4px; }
+  .page-nav.right { right: 8.4px; }
   .page-nav:hover { color: rgba(0,0,0,.72); transform: translateY(-50%) scale(1.18); }
   .page-nav:active { transform: translateY(-50%) scale(.94); }
   /* 信封页按钮重置规则后，恢复箭头按钮的点击热区 */
-  #envelope-overlay .page-nav { padding: 10px 14px; }
-  /* 翻面后，背面隐藏面的 position:fixed 箭头会被180°旋转镜像到另一侧、劫持点击；
-     按翻面状态禁用"非当前面"上的箭头（只保留可见面那个可点） */
+  #envelope-overlay .page-nav { padding: 14px 19.6px; }
+  /* 非当前面整面隐藏：backface-visibility 对绝对定位高 z-index 子元素无效（箭头/红标/滚动条
+     会被 180° 镜像到可见侧）。改为整面 visibility:hidden（延迟 0.55s 半程切面时生效）+
+     overflow 收敛，一次解决：书架页红标、后页右箭头、双滚动条、双左右箭头。 */
+  #pagebook:not(.flipped) .page-face.back,
+  #pagebook.flipped .page-face.front {
+    visibility: hidden;
+    overflow-y: hidden;
+  }
   #pagebook:not(.flipped) .page-face.back .page-nav,
   #pagebook.flipped .page-face.front .page-nav {
     pointer-events: none;
