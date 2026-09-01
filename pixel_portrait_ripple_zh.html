@@ -4023,6 +4023,9 @@
     function vortexTo() {
         if (busy) return;
         busy = true;
+        // 信封/书架全屏期间锁掉外层滚动，避免像素页 body 滚动条与 iframe 内滚动条叠成两个
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
         try {
             // 不显示黑洞黑影（与返回一致）：整页直接旋进中心，随后淡入空白页
             // 空白页定时器放在最前面：后面任何一步出错，也不会一直黑着
@@ -4055,6 +4058,9 @@
 
     function restore() {
         if (!busy) return;
+        // 回到像素页，恢复外层滚动
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
         blank.classList.remove('on');   // 空白页淡出
         fx.classList.remove('on');      // 黑洞收起
 
