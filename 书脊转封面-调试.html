@@ -81,7 +81,9 @@
   .ph-lines { position: absolute; top: 164px; left: 26px; right: 26px; }
   .ph-lines i { display: block; height: 9px; margin-bottom: 11px; border-radius: 5px; background: linear-gradient(90deg, #e9e0cd, #efe8d9); }
   .ph-page { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; font-size: 12px; color: #b7a98f; font-family: 'Shadows Into Light', cursive; }
-  #closeBook { position: fixed; top: 184px; right: 165px; z-index: 60; background: #fff; border: 1px solid #444; color: #333; padding: 9px 20px; border-radius: 22px; font-size: 15px; font-family: inherit; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .3s; }
+  /* 合上按钮：在 .page-zoom 内，zoom 1.19 自动等比放大（字号/内边距无需手乘），
+     相对 #scene 定位随书缩放移动；书摊开时位于右页上方 */
+  #closeBook { position: absolute; top: 12px; left: 65.8%; transform: translateX(-50%); z-index: 60; background: #fff; border: 1px solid #444; color: #333; padding: 9px 20px; border-radius: 22px; font-size: 15px; font-family: inherit; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .3s; }
   #zoomBook { position: absolute; left: calc(50% + 297px); top: calc(50% - 210px); transform: translate(-50%, -50%); z-index: 40; width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.7); color: #4a4a4a; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .3s, transform .15s, box-shadow .15s, background .15s; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
   #zoomBook:hover { transform: translate(-50%,-50%) scale(1.08); background: rgba(255,255,255,.45); box-shadow: 0 6px 20px rgba(0,0,0,.24); }
   #zoomBook svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -1923,9 +1925,10 @@
   <button id="zoomBook" title="放大查看原版页面" aria-label="放大查看原版页面">
     <svg viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
   </button>
+  <!-- 合上按钮：在 #scene 内随书缩放移动（见 #closeBook 定位注释） -->
+  <button id="closeBook">合上</button>
 </div>
 </div>
-<button id="closeBook">合上</button>
 
 <!-- ========== FourCuts 内页源（隐藏，仅供摊开时克隆） ==========
      9 区块对应导出 PDF 的 9 页；每区块横跨一个摊开（左页=左半、右页=右半）。 -->
