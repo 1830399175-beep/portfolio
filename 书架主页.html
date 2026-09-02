@@ -100,16 +100,16 @@
      此处相对 .page-face.back 定位 → 水平贴在页面右侧、垂直与书架场景居中对齐（top:50%）。
      字号按 1/1.19 手动取大，视觉与场景内文字一致。 */
   #clues {
-    position: absolute; right: 3%; top: 50%; transform: translateY(-50%);
+    position: absolute; right: 0.5%; top: 50%; transform: translateY(calc(-50% + 31px));
     z-index: 70; display: flex; flex-direction: column; align-items: flex-end;
     text-align: right; pointer-events: none; user-select: none;
     font-family: 'ZCOOL KuaiLe', cursive; color: #4a3b2a;
     text-shadow: 0 1px 2px rgba(255,255,255,.85);
   }
-  #clues .clue-hint { font-size: 17px; letter-spacing: 5px; color: #8a6f4d; opacity: .9; margin-bottom: 6px; }
+  #clues .clue-hint { font-size: 15.5px; letter-spacing: 5px; color: #8a6f4d; opacity: .9; margin-bottom: 6px; }
   #clues .clue-item {
     pointer-events: auto; cursor: pointer;
-    font-size: 18px; letter-spacing: 1.5px; line-height: 2;
+    font-size: 17px; letter-spacing: 1.5px; line-height: 1.65;
     transition: transform .2s ease, color .2s ease;
   }
   #clues .clue-item:hover { transform: translateX(-3px); color: #1f7a52; }
@@ -2631,7 +2631,7 @@
 <div id="clues">
   <div class="clue-hint">线索</div>
   <div class="clue-item" data-book="title2">小卡超市</div>
-  <div class="clue-item" data-book="title3">小红书穿搭账号</div>
+  <div class="clue-item" data-book="title3">小红书账号</div>
   <div class="clue-item" data-book="title1">人生四格</div>
 </div>
       </div>
