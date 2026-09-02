@@ -1,8 +1,0 @@
-{
-  "name": "xiaoka-pdf-export",
-  "private": true,
-  "version": "1.0.0",
-  "dependencies": {
-    "puppeteer-core": "^25.8.0"
-  }
-}
