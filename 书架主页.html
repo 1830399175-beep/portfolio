@@ -1619,8 +1619,14 @@
   /* 前后页整页等比缩放 119%（原 85% × 140%）（返回按钮除外）：用 zoom 模拟浏览器页面缩放 */
   .page-zoom { zoom: 1.19; }
   /* 书架页内容垂直居中：内容矮于视口时居中，高于时自然滚动不裁切 */
+  /* min-width:1121px 是书架页"整张纸"的地板宽：被 zoom:1.19 放大后渲染≈1334
+     （= #scene 1113 + 两侧各 ~110 对称白边，装得下 ‹ 翻页按钮与线索栏）。
+     视口够宽（≥1334）时不触发，纸面==视口，外观与从前完全一致；
+     视口比纸窄时纸面保持 1334、书架在其中居中，后页出现横向滚动，
+     线索/‹ 落到纸面左右白边里随纸滚动，永不压书架图层。只作用后页，不影响信封前页。 */
   .page-face.back .page-zoom {
     min-height: 100%;
+    min-width: 1121px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -3797,24 +3803,30 @@ function centerNavArrows() {
     var nav = face ? face.querySelector(pair[1]) : null;
     if (face && nav) nav.style.top = Math.round(face.scrollHeight / 2) + 'px';
   });
+  /* 线索栏水平：锚到"后页整张纸"的右缘，而不是视口右缘。
+     纸面 = .page-zoom 渲染右缘（宽口==视口宽度 → 与 CSS right:8.4px 等效，外观不变；
+     窄口 = min-width 地板 1334，纸比视口宽 → 后页横向滚动，线索停进纸右缘白边随纸滚，永不压书架）。
+     必须锚 .page-zoom 而非 face.scrollWidth：线索是 absolute 子元素，一旦被放得比纸宽，
+     会反过来把 scrollWidth 撑大 → 按 scrollWidth 锚定形成循环，连续缩放时线索被"棘轮"越拖越右。 */
+  var back = document.querySelector('.page-face.back');
+  var clue = back ? back.querySelector('#clues') : null;
+  var pz = back ? back.querySelector('.page-zoom') : null;
+  if (back && clue && pz) {
+    var cw = Math.round(clue.getBoundingClientRect().width);
+    // 纸面右缘在内容坐标 = 渲染右缘 − 后页左缘 + 已滚距离
+    var paperRight = pz.getBoundingClientRect().right - back.getBoundingClientRect().left + back.scrollLeft;
+    clue.style.right = 'auto';
+    clue.style.width = cw + 'px';
+    clue.style.left = Math.max(0, Math.round(paperRight - cw - 8.4)) + 'px';
+  }
 }
-/* 整本书随窗口等比缩放：书架画布在窗口过窄时若保持 zoom:1.19 放不下，
-   会因 #scene 的 margin:0 auto 贴左缘、只往右溢出 → 右书架正好顶到屏幕右缘的线索底下。
-   这里在放不下时把 .page-zoom 的 zoom 同比例调小，让画布始终放进视口并居中，
-   左右各留 ~110px 对称白边 → 左 ‹ 右线索永远停在自己一侧白边里、永不压书。
-   （大窗口 z 恒为 1.19，与改动前完全一致；常数需与 CSS 的 #scene{width:935.68px}、zoom:1.19 同步） */
-function fitBookZoom() {
-  var BASE = 935.68, MARGIN = 220;   // 两侧各 ~110px，容纳 ‹/线索区
-  var z = Math.min(1.19, (window.innerWidth - MARGIN) / BASE);
-  if (z < 0.62) z = 0.62;            // 极窄下限：过小则回归可滚动
-  var els = document.querySelectorAll('.page-zoom');
-  for (var i = 0; i < els.length; i++) els[i].style.zoom = z.toFixed(3);
-}
-function layoutBack() { fitBookZoom(); centerNavArrows(); }   // 先缩放再按内容高定箭头中心线
-fitBookZoom(); centerNavArrows();
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutBack);
-window.addEventListener('load', layoutBack);
-window.addEventListener('resize', layoutBack);
+/* 整本书不随窗口缩放（zoom 恒为 1.19，书架随页面比例同步放大，与从前一致）。
+   书架页"整张纸"有 CSS min-width 地板宽（见 1621 行注释）；窗口比纸窄时纸比视口宽 →
+   后页横向滚动，线索/‹ 分别锚纸面右/左缘白边内。load / fonts.ready / resize 后按内容高定心。 */
+centerNavArrows();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(centerNavArrows);
+window.addEventListener('load', centerNavArrows);
+window.addEventListener('resize', centerNavArrows);
 
 
 /* 相纸滑动音效：取 音频/滑动相纸.wav 的前2秒，按滑动时长快慢速播放（信纸切换0.5s） */
