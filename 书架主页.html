@@ -3812,11 +3812,15 @@ function centerNavArrows() {
   var clue = back ? back.querySelector('#clues') : null;
   var pz = back ? back.querySelector('.page-zoom') : null;
   if (back && clue && pz) {
+    // 第一步先量"自然宽"：恢复 CSS 原态 right:8.4 / 左 auto / 宽 auto → 收缩宽度即内容真实宽(≈86)，
+    //   不受任何左偏移约束（否则窄窗口下 width:auto+left 大偏移会被可用空间压扁）。
+    clue.style.right = '8.4px'; clue.style.left = 'auto'; clue.style.width = 'auto';
     var cw = Math.round(clue.getBoundingClientRect().width);
-    // 纸面右缘在内容坐标 = 渲染右缘 − 后页左缘 + 已滚距离
+    // 第二步再锚到"整张纸"右缘：纸面右缘内容坐标 = .page-zoom 渲染右缘 − 后页左缘 + 已滚距离。
+    //   宽口 paperRight==视口宽 → left 与 right:8.4 等效、外观不变；窄口 → 线索停进纸右缘白边随纸滚。
     var paperRight = pz.getBoundingClientRect().right - back.getBoundingClientRect().left + back.scrollLeft;
     clue.style.right = 'auto';
-    clue.style.width = cw + 'px';
+    clue.style.width = cw + 'px';   // 钉住自然宽，避免 left 锚定后 width:auto 收缩被可用空间压扁
     clue.style.left = Math.max(0, Math.round(paperRight - cw - 8.4)) + 'px';
   }
 }
