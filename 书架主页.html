@@ -97,10 +97,10 @@
 
   /* 线索栏：书架页右侧纯文字提示，点作品名直接翻开对应书。
      HTML 必须放 .page-face.back 内、.page-zoom 之外（与翻页箭头同级），避免被 zoom:1.19 放大；
-     此处相对 .page-face.back 定位 → 水平贴在页面右侧、垂直与书架场景居中对齐（top:50%）。
-     字号按 1/1.19 手动取大，视觉与场景内文字一致。 */
+     定位与 ‹ › 翻页按钮同一套方式：right:8.4px 贴右缘（与左缘 ‹ 镜像），
+     垂直居中由 JS centerNavArrows 设 top=内容高/2（与箭头同中心线，见 3788 行）。 */
   #clues {
-    position: absolute; right: 0.5%; top: 50%; transform: translateY(calc(-50% + 25px));
+    position: absolute; right: 8.4px; top: 0; transform: translateY(-50%);
     z-index: 70; display: flex; flex-direction: column; align-items: flex-end;
     text-align: right; pointer-events: none; user-select: none;
     font-family: 'ZCOOL KuaiLe', cursive; color: #4a3b2a;
@@ -3789,7 +3789,8 @@ function centerNavArrows() {
   var pairs = [
     ['.page-face.front', '.page-nav.right'],
     ['.page-face.front', '#back-to-pixel'],
-    ['.page-face.back', '.page-nav.left']
+    ['.page-face.back', '.page-nav.left'],
+    ['.page-face.back', '#clues']   // 线索栏与 ‹ 翻页按钮同垂直中心线
   ];
   pairs.forEach(function (pair) {
     var face = document.querySelector(pair[0]);
@@ -3797,10 +3798,23 @@ function centerNavArrows() {
     if (face && nav) nav.style.top = Math.round(face.scrollHeight / 2) + 'px';
   });
 }
-centerNavArrows();
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(centerNavArrows);
-window.addEventListener('load', centerNavArrows);
-window.addEventListener('resize', centerNavArrows);
+/* 整本书随窗口等比缩放：书架画布在窗口过窄时若保持 zoom:1.19 放不下，
+   会因 #scene 的 margin:0 auto 贴左缘、只往右溢出 → 右书架正好顶到屏幕右缘的线索底下。
+   这里在放不下时把 .page-zoom 的 zoom 同比例调小，让画布始终放进视口并居中，
+   左右各留 ~110px 对称白边 → 左 ‹ 右线索永远停在自己一侧白边里、永不压书。
+   （大窗口 z 恒为 1.19，与改动前完全一致；常数需与 CSS 的 #scene{width:935.68px}、zoom:1.19 同步） */
+function fitBookZoom() {
+  var BASE = 935.68, MARGIN = 220;   // 两侧各 ~110px，容纳 ‹/线索区
+  var z = Math.min(1.19, (window.innerWidth - MARGIN) / BASE);
+  if (z < 0.62) z = 0.62;            // 极窄下限：过小则回归可滚动
+  var els = document.querySelectorAll('.page-zoom');
+  for (var i = 0; i < els.length; i++) els[i].style.zoom = z.toFixed(3);
+}
+function layoutBack() { fitBookZoom(); centerNavArrows(); }   // 先缩放再按内容高定箭头中心线
+fitBookZoom(); centerNavArrows();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutBack);
+window.addEventListener('load', layoutBack);
+window.addEventListener('resize', layoutBack);
 
 
 /* 相纸滑动音效：取 音频/滑动相纸.wav 的前2秒，按滑动时长快慢速播放（信纸切换0.5s） */
