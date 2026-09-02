@@ -95,6 +95,26 @@
   #zoomClose { position: absolute; top: -16px; right: -16px; z-index: 2; width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.7); color: #4a4a4a; font-size: 22px; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.16); }
   #zoomClose:hover { background: rgba(255,255,255,.45); color: #000; }
 
+  /* 线索栏：书架页右侧纯文字提示，点作品名直接翻开对应书。
+     HTML 必须放 .page-face.back 内、.page-zoom 之外（与翻页箭头同级），避免被 zoom:1.19 放大；
+     此处相对 .page-face.back 定位 → 水平贴在页面右侧、垂直与书架场景居中对齐（top:50%）。
+     字号按 1/1.19 手动取大，视觉与场景内文字一致。 */
+  #clues {
+    position: absolute; right: 3%; top: 50%; transform: translateY(-50%);
+    z-index: 70; display: flex; flex-direction: column; align-items: flex-end;
+    text-align: right; pointer-events: none; user-select: none;
+    font-family: 'ZCOOL KuaiLe', cursive; color: #4a3b2a;
+    text-shadow: 0 1px 2px rgba(255,255,255,.85);
+  }
+  #clues .clue-hint { font-size: 13px; letter-spacing: 4px; color: #8a6f4d; opacity: .9; margin-bottom: 6px; }
+  #clues .clue-item {
+    pointer-events: auto; cursor: pointer;
+    font-size: 18px; letter-spacing: 1.5px; line-height: 2;
+    transition: transform .2s ease, color .2s ease;
+  }
+  #clues .clue-item:hover { transform: translateX(-3px); color: #1f7a52; }
+  #clues .clue-item:active { transform: translateX(-1px) scale(.96); }
+
   /* 左上角留声机播放器（法式手绘：水彩卡片 + 波浪手绘线条） */
   #player {
     position: fixed; top: 66px; left: 18px; z-index: 90;
@@ -817,13 +837,13 @@
   .xd-custom .nc-scale{width:100%;height:100%;transform:scale(.8);transform-origin:center center}
 
   /* ============================================================
-     侦探信封开场 —— 覆盖在窗帘书架上；点第三页"准备好探寻真相了吗？"
+     侦探信封开场 —— 覆盖在窗帘书架上；翻到第四页（任务卡）点"探索"
      后信封合上淡出，随即触发书架出场动画（.envelope / .paper-2 / .d-* 作用域）
      ============================================================ */
   #envelope-overlay,
   #envelope-overlay * { box-sizing: border-box; }
   /* 主文件靠全局 *{margin:0;padding:0} 清零，这里作用域内补上，否则 <p> 默认
-     外边距会把第三页内容撑高 63px、页脚挤出信纸被裁掉 */
+     外边距会把 letter-content-p3 内容撑高 63px、页脚挤出信纸被裁掉 */
   #envelope-overlay p { margin: 0; }
   #envelope-overlay button { padding: 0; }
 
@@ -935,6 +955,12 @@
     opacity: 0.75;
   }
 
+  .paper-2[data-index="3"] {
+    z-index: 0;
+    transform: translateY(-41px) scale(0.88);
+    opacity: 0.6;
+  }
+
   /* 方案 2 的飞走/飞回动画类 */
   .paper-2.fly-left {
     transform: translateX(-540px) rotate(-10deg) scale(0.9) !important;
@@ -944,7 +970,8 @@
 
   /* 未抽离信封前：隐藏后方卡片 */
   .envelope-wrapper:not(.open) .paper-2[data-index="1"],
-  .envelope-wrapper:not(.open) .paper-2[data-index="2"] {
+  .envelope-wrapper:not(.open) .paper-2[data-index="2"],
+  .envelope-wrapper:not(.open) .paper-2[data-index="3"] {
     transform: translateY(0) scale(1) !important;
     opacity: 0 !important;
   }
@@ -1456,7 +1483,7 @@
     color: #666;
   }
 
-  /* 第三页专有样式 */
+  /* 引言信（第 1 页）与任务卡（第 4 页）共用样式 */
   .letter-content-p3 {
     display: flex;
     flex-direction: column;
@@ -1505,29 +1532,45 @@
   }
 
   .task-card-p3 {
-    background-color: #f4f7f5;
-    border-left: 3px solid #3d5a45;
-    padding: 5px 9px;
-    border-radius: 0 5px 5px 0;
-    margin-top: 3px;
     flex-shrink: 0;
+  }
+
+  /* 第四张信纸（纯任务卡）内容居中 */
+  #p2-3 .letter-content-p3 {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* 第一页引言信：法语引言 / 场景引言 定位与缩放（由文字调试面板定稿） */
+  #p2-0 .letter-content-p3 {
+    align-items: center;
+    overflow: visible;
+  }
+  #p2-0 .letter-head-p3 {
+    transform: translateY(41px) scale(1.16);
+    transform-origin: center top;
+  }
+  #p2-0 .section-intro-p3 {
+    transform: translateY(-56px) scale(1.16);
+    transform-origin: center top;
   }
 
   .task-title-p3 {
     font-family: 'ZCOOL KuaiLe', sans-serif;
-    font-size: 12px;
+    font-size: 28px;
     font-weight: 700;
-    color: #3d5a45;
-    margin-bottom: 2px;
-    display: inline-block;
+    color: #233028;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
   }
 
   .task-desc-p3 {
     font-family: 'ZCOOL KuaiLe', sans-serif;
-    font-size: 11px;
-    line-height: 1.35;
+    font-size: 15px;
+    line-height: 1.6;
     color: #444444;
-    text-align: justify;
+    max-width: 220px;
   }
 
   .book-highlight {
@@ -1553,7 +1596,7 @@
   #envelope-overlay .letter-footer-p3:hover { color: #1f7a52; text-decoration: underline; }
 
 
-  /* ===== 前后两页：前页=信封，后页=书架；点击第三张信纸"探索"翻到书架 ===== */
+  /* ===== 前后两页：前页=信封，后页=书架；点击第四张信纸"探索"翻到书架 ===== */
   html, body { margin: 0; height: 100%; overflow: hidden; }
   .page-stage { position: fixed; inset: 0; perspective: 1800px; }
   #pagebook {
@@ -1626,7 +1669,7 @@
     cursor: pointer;
     transition: background .25s ease;
   }
-  /* 翻到第三张信纸时，发出白色光晕脉冲；滑回第二张时消失 */
+  /* 翻到第四张信纸（任务卡）时，发出白色光晕脉冲；滑回第三张时消失 */
   #envelope-overlay .explore-btn.active {
     animation: exploreGlow 1.8s ease-in-out infinite;
   }
@@ -1740,9 +1783,38 @@
     <!-- 信纸内容区域 -->
     <div class="letter" id="stage2">
 
-      <!-- 信纸 1：目标人物 -->
+      <!-- 信纸 1：场景引言信 -->
       <div class="paper-2" id="p2-0" data-index="0">
         <button class="btn-nav prev" disabled>
+          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="btn-nav next" onclick="s2Next(event)">
+          <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+
+        <div class="letter-content-p3">
+          <!-- 头部法语引言 -->
+          <div class="letter-head-p3">
+            <div class="french-quote">"Vous êtes sur le point d'entrer dans son univers..."</div>
+            <div class="french-sub">(你即将步入她的宇宙...)</div>
+          </div>
+
+          <!-- 场景引言 -->
+          <div class="section-intro-p3">
+            <p>很高兴你拆开了这封信。</p>
+            <p>你踩中的，正是 Sunburn 的法式风情宇宙。</p>
+            <p>此刻你已踏入她的灵感之家，书房正等着你推门而入。</p>
+          </div>
+        </div>
+
+        <div class="control-bar">
+          <span class="indicator">1 / 4</span>
+        </div>
+      </div>
+
+      <!-- 信纸 2：目标人物 -->
+      <div class="paper-2" id="p2-1" data-index="1">
+        <button class="btn-nav prev" onclick="s2Prev(event)">
           <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
         <button class="btn-nav next" onclick="s2Next(event)">
@@ -1796,12 +1868,12 @@
         </div>
 
         <div class="control-bar">
-          <span class="indicator">1 / 3</span>
+          <span class="indicator">2 / 4</span>
         </div>
       </div>
 
-      <!-- 信纸 2：调查记录 -->
-      <div class="paper-2" id="p2-1" data-index="1">
+      <!-- 信纸 3：调查记录 -->
+      <div class="paper-2" id="p2-2" data-index="2">
         <button class="btn-nav prev" onclick="s2Prev(event)">
           <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
@@ -1837,12 +1909,12 @@
         </div>
 
         <div class="control-bar">
-          <span class="indicator">2 / 3</span>
+          <span class="indicator">3 / 4</span>
         </div>
       </div>
 
-      <!-- 信纸 3：场景引言信 -->
-      <div class="paper-2" id="p2-2" data-index="2">
+      <!-- 信纸 4：任务卡 -->
+      <div class="paper-2" id="p2-3" data-index="3">
         <button class="btn-nav prev" onclick="s2Prev(event)">
           <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
@@ -1851,32 +1923,17 @@
         </button>
 
         <div class="letter-content-p3">
-          <!-- 头部法语引言 -->
-          <div class="letter-head-p3">
-            <div class="french-quote">"Vous êtes sur le point d'entrer dans son univers..."</div>
-            <div class="french-sub">(你即将步入她的宇宙...)</div>
-          </div>
-
-          <!-- 第一部分：场景渲染 -->
-          <div class="section-intro-p3">
-            <p>很高兴你拆开了这封信。</p>
-            <p>你此刻踩中的，正是 Sunburn 幻想中的法式风情宇宙。</p>
-            <p>寻人的第一站，是她日夜留连的书房。这里的空气里弥漫着墨水与咖啡的香气，书架上摆放着她精心雕琢的思维印记。</p>
-          </div>
-
-          <!-- 第二部分：探员任务卡片 -->
+          <!-- 探员任务卡片 -->
           <div class="task-card-p3">
             <div class="task-title-p3">你的任务：</div>
             <div class="task-desc-p3">
-              探索书房中的各个角落，找到<span class="book-highlight">三本可被翻阅的书</span>。翻开它们，组合那些被她留下的设计线索与作品全貌，你就能拼凑出属于她的完整灵感版图。
+              翻开书房里的<span class="book-highlight">三本书</span>，拼凑出属于 Sunburn 的完整灵感版图。
             </div>
           </div>
-
-
         </div>
 
         <div class="control-bar">
-          <span class="indicator">3 / 3</span>
+          <span class="indicator">4 / 4</span>
         </div>
       </div>
 
@@ -2568,16 +2625,31 @@
   </div>
 </div>
 </div>
-<!-- 放大查看原版 HTML（上下滑动版）：白色半透明模糊遮罩 + iframe 主体 + 右上角关闭（不参与缩放，始终铺满视口） -->
+<!-- 线索栏：书架页右侧提示（纯文字）——点作品名翻开对应书（data-book 对应 BOOKS 键 title1/2/3）。
+     放在 .page-face.back 内、.page-zoom 之外，与翻页箭头同级 → 不受 zoom:1.19 影响；
+     CSS 用 position:absolute 相对本面定位（页面右侧 + 垂直居中）。 -->
+<div id="clues">
+  <div class="clue-hint">线索</div>
+  <div class="clue-item" data-book="title2">小卡超市</div>
+  <div class="clue-item" data-book="title3">小红书穿搭账号</div>
+  <div class="clue-item" data-book="title1">人生四格</div>
+</div>
+      </div>
+    </div>
+  </div>
+<!-- 放大查看原版 HTML：白色半透明模糊遮罩 + iframe 主体 + 右上角关闭。
+     两大硬性约束（缺一都会出连锁问题）：
+     1) 必须放 body 根层：一旦放进 #pagebook / .page-face 等带 transform / perspective / zoom 的祖先内，
+        position:fixed 会相对它们定位，页面滚动后放大框就不在视口正中心；
+     2) 必须位于下方紧邻的主 <script> 之前：该脚本解析执行时就用 getElementById('zoomClose') 绑定关闭监听，
+        若本块放在脚本之后，此刻元素还不存在 → 抛 TypeError 中断整个脚本 → centerNavArrows（翻转按钮垂直居中）、
+        关闭按钮绑定等后续代码全不执行。 -->
 <div id="zoomView">
   <div class="zoom-frame-wrap">
     <iframe id="zoomFrame" title="原版页面"></iframe>
     <button id="zoomClose" title="关闭">&#215;</button>
   </div>
 </div>
-      </div>
-    </div>
-  </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 const W = 1376, H = 768;
@@ -3219,6 +3291,8 @@ function openBook(id) {
   scene.appendChild(el);
   gsap.to(['#gCurtain', '#gShelf', '#gChandelier'], { opacity: .5, filter: 'blur(7px)', duration: .4 });
   gsap.to('#gTitles', { opacity: .5, filter: 'blur(7px)', duration: .4 });
+  gsap.to('#clues', { opacity: .25, duration: .4 });
+  gsap.set('#clues', { pointerEvents: 'none' });
   gsap.to('.greet', { opacity: 0, duration: .4 });
 
   const tl = gsap.timeline();
@@ -3538,6 +3612,7 @@ function closeBook() {
       });
       gsap.to(['#gCurtain', '#gShelf', '#gChandelier'], { opacity: 1, filter: 'blur(0px)', duration: .4, onComplete: function(){ gsap.set(['#gCurtain', '#gShelf', '#gChandelier'], { clearProps: 'filter,opacity' }); } });
       gsap.to('#gTitles', { opacity: 1, filter: 'blur(0px)', duration: .4, onComplete: function(){ gsap.set('#gTitles', { clearProps: 'filter,opacity' }); } });
+      gsap.to('#clues', { opacity: 1, duration: .4, onComplete: function(){ gsap.set('#clues', { clearProps: 'opacity,pointerEvents' }); } });
       gsap.to('.greet', { opacity: 1, duration: .4 });
     }, 'closeStart+=0.45')
     .add(function() {
@@ -3577,6 +3652,10 @@ function hideZoom() {
   document.getElementById('zoomFrame').src = 'about:blank';   // 下次打开重新加载，动效重播
 }
 document.getElementById('zoomBook').addEventListener('click', showZoom);
+/* 线索栏：点作品名 → 翻开对应书（同点书架上的立书，走 openBook；data-book 对应 BOOKS 键） */
+document.querySelectorAll('#clues .clue-item').forEach(function (it) {
+  it.addEventListener('click', function () { openBook(it.getAttribute('data-book')); });
+});
 document.getElementById('zoomClose').addEventListener('click', hideZoom);
 document.getElementById('zoomView').addEventListener('click', function(e) { if (e.target === this) hideZoom(); });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') hideZoom(); });
@@ -3816,7 +3895,7 @@ function envelopeClose(event) {
 let s2Index = 0;
 
 function updateS2Stack() {
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 4; i++) {
     const el = document.getElementById(`p2-${i}`);
     el.classList.remove('fly-left', 'fly-right');
 
@@ -3827,17 +3906,17 @@ function updateS2Stack() {
       el.setAttribute('data-index', relIndex);
     }
   }
-  /* 只有第三张信纸时，开始探索按钮出现并亮白光晕 */
+  /* 只有第四张信纸（任务卡）时，开始探索按钮出现并亮白光晕 */
   const eb = document.querySelector('#envelope-overlay .explore-btn');
   if (eb) {
-    if (s2Index === 2) eb.classList.add('active');
+    if (s2Index === 3) eb.classList.add('active');
     else eb.classList.remove('active');
   }
 }
 
 function s2Next(event) {
   if (event) event.stopPropagation();
-  if (s2Index < 2) {
+  if (s2Index < 3) {
     s2Index++;
     updateS2Stack();
     playPaperSound(500); /* 信纸滑动切换0.5s */
@@ -3853,8 +3932,8 @@ function s2Prev(event) {
   }
 }
 
-/* 第三页末尾"准备好探寻真相了吗？"：信封合上淡出 → 书架出场动画 */
-/* 第三张信纸"探索"：翻到后页（书架）并播放出场动画 */
+/* 第四页末尾任务卡"探索"：信封合上淡出 → 书架出场动画 */
+/* 第四张信纸"探索"：翻到后页（书架）并播放出场动画 */
 function closeEnvelope(event) {
   if (event) event.stopPropagation();
   const pb = document.getElementById('pagebook');
