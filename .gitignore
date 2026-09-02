@@ -4,3 +4,10 @@ node_modules/
 # 系统缩略图缓存
 Thumbs.db
 .DS_Store
+
+# 根目录交付文件（PDF/PPTX 归档，不入库）：
+# 之前 5542d05 把 33MB 的 小卡超市-NCT-SHU队.pptx 提交进根目录，
+# 触发 Cloudflare Pages 单文件 25MiB 上限，导致每次部署失败。
+# 这些文件只在本地保留，需要发布时用其他途径托管。
+/*.pdf
+/*.pptx
